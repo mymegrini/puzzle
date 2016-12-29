@@ -2,6 +2,7 @@
 #define GRID_H
 
 #include <cassert>
+#include "Box.hpp"
 
 enum class Input {UP, DOWN, LEFT, RIGHT}; 
 
@@ -21,9 +22,9 @@ public:
   ~Grid(){ delete[] array; }
 
 protected:
-  Box* array; // Contiguous multidimentional array
   int n; // Number of lines
   int m; // Number of columns
+  Box* array; // Contiguous multidimentional array
 };
 
 #endif
