@@ -10,6 +10,7 @@ $(EXE) 		: $(OBJ)
 	$(CXX) 	-o $@ $^
 
 main.o 		: main.hpp Box.hpp
+GridTaquin.o: Box.hpp Grid.hpp GridTaquin.hpp
 
 clean 		:
 	rm -f $(OBJ)
