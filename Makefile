@@ -1,0 +1,19 @@
+CXX = g++ -std=c++14 -Wall
+SRC = $(wildcard *.cpp)
+OBJ = $(patsubst %.cpp,%.o,$(SRC))
+EXE = puzzle
+
+#.SILENT	:
+all 		: $(EXE)
+
+$(EXE) 		: $(OBJ)
+	$(CXX) 	-o $@ $^
+
+main.o 		: 
+
+
+clean 		:
+	rm -f $(OBJ)
+
+cleanx		: clean
+	rm -f $(EXE)
