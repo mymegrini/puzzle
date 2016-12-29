@@ -14,14 +14,16 @@ int main(int argc, char* argv[]){
 
   parse_argv(argc, argv, n, m, text, human, game);
 
-  if (text); //text-mode
-  if (!human); //auto-mode
-  cout << "game: " << game << " size:" << n << 'x' << m << endl;
+  cout << "game: " << game << " size:" << n << 'x' << m;
+  if (text)
+	cout << " text-mode";
+  if (!human)
+	cout << " auto-mode";
+  cout << endl;
 
   Box b = {BoxType::EMPTY, 7};
   Box a = b;
-  cout << "Box a(" << a.Value() << ")" << endl; 
-  
+  cout << "Box a(" << a.Value() << ")" << endl;
 
   return 0;
 }

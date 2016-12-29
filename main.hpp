@@ -19,7 +19,6 @@ void parse_argv(int argc, char* argv[], int& n, int& m, bool& text,
     
   static struct option long_options[] = {
     {"auto", no_argument, NULL, 'a'},
-    {"game", required_argument, NULL, 'g'},
     {"help", no_argument, NULL, 'h'},
     {"size", required_argument, NULL, 's'},
     {"text", no_argument, NULL, 't'},
@@ -37,8 +36,6 @@ void parse_argv(int argc, char* argv[], int& n, int& m, bool& text,
 Available options:\n\
 \t-a, --auto\n\
 \t\tuse automatic player\n\
-\t-g, --game\n\
-\t\tcustomize game choice\n\
 \t-s, --size\n\
 \t\tcustom grid size '\n\
 \t-t, --text\n\
@@ -52,9 +49,6 @@ Available options:\n\
     case 't':
       text = true;
       break;
-    case 'g':
-      game = string(optarg);
-	  break;
     case 's': {
 	  string size = string(optarg);
 	  uint x = size.find('x');
@@ -73,9 +67,11 @@ Available options:\n\
     }
   }
   
-  while (optind < argc){
-    cout << "Unrecognized argument: " << argv[optind++] << endl;
-  }
+  if (optind >= argc){
+    cerr << "No game specified." << endl;
+	exit(1);
+  } else
+	game = argv[optind++];
 }
 
 #endif
