@@ -10,7 +10,6 @@ $(EXE) 		: $(OBJ)
 	$(CXX) 	-o $@ $^
 
 main.o 		: main.hpp Box.hpp
-Box.o		: Box.hpp
 
 clean 		:
 	rm -f $(OBJ)
