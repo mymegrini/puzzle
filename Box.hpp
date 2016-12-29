@@ -2,7 +2,7 @@
 #define BOX_H
 
 // *----*
-// |2048|
+// | 10 |
 // *----*
 
 enum class BoxType {EMPTY, INT, CHARACTER, WALL, BOX, HOLE};
