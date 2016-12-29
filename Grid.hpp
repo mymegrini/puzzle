@@ -1,15 +1,28 @@
 #ifndef GRID_H
 #define GRID_H
 
-class Grid {
+#include <cassert>
+
+enum class Input {UP, DOWN, LEFT, RIGHT}; 
+
+class Grid { /* interface */
 
 public:
-  virtual void Up() = 0;
-  virtual void Down() = 0;
-  virtual void Left() = 0;
-  virtual void Right() = 0;
-  virtual void print() = 0;
-  virtual Box operator()(int, int) = 0;
+  Grid(int n, int m):n(n), m(m), array(new Box[n*m]){}
+  virtual Box operator()(int i, int j){
+	assert(i>=0 && i<n && "Out of bounds.");
+	assert(j>=0 && j<m && "Out of bounds.");
+	return array[m*i+j];
+  }
+  virtual void Init() = 0; // Initialize Box contents
+  virtual void play(Input user) = 0; // Modify Grid according to user input
+  virtual void print() = 0; // Print the grid in text-mode
+  ~Grid(){ delete[] array; }
+
+  private:
+  Box* array; // Contiguous multidimentional array
+  int n; // Number of lines
+  int m; // Number of columns
 };
 
 #endif
