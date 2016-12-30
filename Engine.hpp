@@ -28,7 +28,15 @@ public:
 	g.Start();
 	g.Print();
 	while(!g.GameOver()){
-	  g.Play(Player());
+	  Input input = Player();
+	  switch(input){
+	  case Input::CLOSE:
+		return;
+	  case Input::NONE:
+		break;
+	  default :
+		g.Play(input);
+	  }
 	  g.Print();
 	}
   }
@@ -59,7 +67,7 @@ public:
 
 protected:
   Input AutoPlayer(){
-	
+
 	std::this_thread::sleep_for(1s);
 	switch(rand() % 4){
 	case 0 :

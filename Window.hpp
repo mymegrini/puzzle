@@ -1,0 +1,29 @@
+#ifndef WINDOW_H
+#define WINDOW_H
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include "Input.hpp"
+#include "Grid.hpp"
+
+class Window {
+
+public:
+  Window(int n, int m);
+  void Init();
+  Input Player();
+  void Render(Grid&);
+  ~Window();
+
+private:
+  const int n;
+  const int m;
+  const int width;
+  const int height;
+  SDL_Window* window = NULL;
+  SDL_Renderer* renderer = NULL;
+  SDL_Texture* texture = NULL;
+  void RenderBox(Box, int, int);
+};
+
+#endif
