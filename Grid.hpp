@@ -3,8 +3,8 @@
 
 #include <cassert>
 #include "Box.hpp"
+#include "Input.hpp"
 
-enum class Input {UP, DOWN, LEFT, RIGHT};
 
 class Grid { /* interface */
 
@@ -16,7 +16,10 @@ public:
   virtual void Print() = 0; // Print the grid in text-mode
   virtual void Play(Input user) = 0; // Modify Grid according to user input
   virtual bool GameOver() = 0; // Returns true if game is over
-  ~Grid(){ delete[] array; }
+  ~Grid(){
+	if(array!=nullptr)
+	  delete[] array;
+  }
 
 protected:
   int n; // Number of lines

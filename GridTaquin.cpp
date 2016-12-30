@@ -93,3 +93,15 @@ bool GridTaquin::GameOver(){
 	  return false;
   return true;
 }
+
+GridTaquin& GridTaquin::operator=(const GridTaquin& g){
+
+  if (array != nullptr)
+	delete[] array;
+  n = g.n;
+  m = g.m;
+  empty = g.empty;
+  for (int i=0; i<m*n; ++i)
+	array[i] = g.array[i];
+  return *this;
+}

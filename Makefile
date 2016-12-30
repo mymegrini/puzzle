@@ -9,7 +9,7 @@ all 		: $(EXE)
 $(EXE) 		: $(OBJ)
 	$(CXX) 	-o $@ $^
 
-main.o 		: main.hpp Box.hpp Grid.hpp GridTaquin.hpp
+main.o 		: main.hpp Box.hpp Grid.hpp GridTaquin.hpp Engine.hpp
 GridTaquin.o: GridTaquin.hpp Grid.hpp Box.hpp
 
 

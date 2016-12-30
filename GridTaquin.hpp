@@ -6,12 +6,13 @@
 class GridTaquin : public Grid {
 
 public:
-  using Grid::Grid;
+  GridTaquin(int i=3, int j=4):Grid(i,j){}
   virtual void Init() override;
   virtual void Start() override;
   virtual void Print() override;
   virtual void Play(Input user) override;
   virtual bool GameOver() override;
+  GridTaquin& operator=(const GridTaquin&);
 
 private:
   int empty=m*n; //Location of the empty Box

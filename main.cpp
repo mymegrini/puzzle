@@ -2,12 +2,14 @@
 
 #include "Box.hpp"
 #include "GridTaquin.hpp"
-#include "Game.hpp"
+#include "Engine.hpp"
 
 using namespace std;
 
 int main(int argc, char* argv[]){
 
+  int n = 0;
+  int m = 0;
   bool text = false; //text-mode
   bool human = true; //auto-mode
   string game = ""; //game name
@@ -26,18 +28,8 @@ int main(int argc, char* argv[]){
   cout << "Box a(" << a.Value() << ")" << endl;
 
   if (game == "taquin"){
-	GridTaquin g(n, m);
-	g.Init();
-	g.Shuffle();
-	g.Print();
-	g.Play(Input::UP);
-	g.Print();
-	g.Play(Input::LEFT);
-	g.Print();
-	g.Play(Input::DOWN);
-	g.Print();
-	g.Play(Input::RIGHT);
-	g.Print();
+	Engine<GridTaquin> e(n,m,human);
+	e.Run();
   }
 
   return 0;
