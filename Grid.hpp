@@ -17,7 +17,7 @@ public:
   virtual void Play(Input user) = 0; // Modify Grid according to user input
   virtual bool GameOver() = 0; // Returns true if game is over
   ~Grid(){
-	if(array!=nullptr)
+	if (array != nullptr)
 	  delete[] array;
   }
 

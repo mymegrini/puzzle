@@ -2,8 +2,9 @@
 #define ENGINE_H
 
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include <cstdlib>
-#include "unistd.h"
 #include "Input.hpp"
 
 template <class G>
@@ -31,8 +32,10 @@ public:
 
   virtual Input Player(){
 
-	if(human)
-	  switch('w'){
+	if(human){
+	  string input;
+	  cin >> input;
+	  switch(input[0]){
 	  case 'w' :
 		return Input::UP;
 	  case 'a' :
@@ -42,12 +45,17 @@ public:
 	  case 'd' :
 		return Input::RIGHT;
 	  case 'c' :
-		return Input::CLOSE;
+		exit(0);
 	  default :
 		return Input::UNHANDLED;
 	  }
+	}
 	else {
-	  sleep(1);
+	  using namespace std::chrono_literals;
+	  std::chrono::high_resolution_clock::now();
+	  std::this_thread::sleep_for(2s);
+	  std::chrono::high_resolution_clock::now();
+
 	  switch(rand() % 4){
 	  case 0 :
 		return Input::UP;

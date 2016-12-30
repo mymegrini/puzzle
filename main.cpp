@@ -15,6 +15,7 @@ int main(int argc, char* argv[]){
   string game = ""; //game name
 
   parse_argv(argc, argv, n, m, text, human, game); // Defined in main.hpp
+  srand(time(0)); // Seeding RNG
 
   cout << "game: " << game << " size:" << n << 'x' << m;
   if (text)
@@ -26,6 +27,11 @@ int main(int argc, char* argv[]){
   Box b = {BoxType::EMPTY, 7};
   Box a = b;
   cout << "Box a(" << a.Value() << ")" << endl;
+
+  string s;
+  cout << "Testing cin : ";
+  cin >> s;
+  cout << s << endl;
 
   if (game == "taquin"){
 	Engine<GridTaquin> e(n,m,human);

@@ -82,7 +82,7 @@ void GridTaquin::Play(Input user){
 	}
 	break;
   default:
-	assert(!"Unrecognized input.");
+	;
   }
 }
 
@@ -98,8 +98,10 @@ GridTaquin& GridTaquin::operator=(const GridTaquin& g){
 
   if (array != nullptr)
 	delete[] array;
+
   n = g.n;
   m = g.m;
+  array = new Box[n*m];
   empty = g.empty;
   for (int i=0; i<m*n; ++i)
 	array[i] = g.array[i];
