@@ -53,26 +53,27 @@ public:
 		return Input::UNHANDLED;
 	  }
 	}
-	else {
-	  // std::chrono::high_resolution_clock::now();
-	  std::this_thread::sleep_for(1s);
-	  // std::chrono::high_resolution_clock::now();
+	else
+	  return AutoPlayer();
+  }
 
-	  switch(rand() % 4){
-	  case 0 :
-		return Input::UP;
-	  case 1 :
-		return Input::LEFT;
-	  case 2 :
-		return Input::DOWN;
-	  case 3 :
-		return Input::RIGHT;
-	  default :
-		return Input::UNHANDLED;
-	  } 
+protected:
+  Input AutoPlayer(){
+	
+	std::this_thread::sleep_for(1s);
+	switch(rand() % 4){
+	case 0 :
+	  return Input::UP;
+	case 1 :
+	  return Input::LEFT;
+	case 2 :
+	  return Input::DOWN;
+	case 3 :
+	  return Input::RIGHT;
+	default :
+	  return Input::UNHANDLED;
 	}
   }
-private:
   bool human;
   G g;
 };
