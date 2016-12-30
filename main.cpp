@@ -28,11 +28,6 @@ int main(int argc, char* argv[]){
   Box a = b;
   cout << "Box a(" << a.Value() << ")" << endl;
 
-  string s;
-  cout << "Testing cin : ";
-  cin >> s;
-  cout << s << endl;
-
   if (game == "taquin"){
 	Engine<GridTaquin> e(n,m,human);
 	e.Run();

@@ -7,6 +7,8 @@
 #include <cstdlib>
 #include "Input.hpp"
 
+using namespace std::chrono_literals;
+
 template <class G>
 class Engine {
 
@@ -16,12 +18,13 @@ public:
 	  g = G();
 	else
 	  g = G(n,m);
-	g.Init();
-	g.Print();
   }
 
   virtual void Run(){
 
+	g.Init();
+	g.Print();
+	std::this_thread::sleep_for(2s);
 	g.Start();
 	g.Print();
 	while(!g.GameOver()){
@@ -51,10 +54,9 @@ public:
 	  }
 	}
 	else {
-	  using namespace std::chrono_literals;
-	  std::chrono::high_resolution_clock::now();
-	  std::this_thread::sleep_for(2s);
-	  std::chrono::high_resolution_clock::now();
+	  // std::chrono::high_resolution_clock::now();
+	  std::this_thread::sleep_for(1s);
+	  // std::chrono::high_resolution_clock::now();
 
 	  switch(rand() % 4){
 	  case 0 :
