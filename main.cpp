@@ -2,6 +2,7 @@
 
 #include "Box.hpp"
 #include "GridTaquin.hpp"
+#include "Grid2048.hpp"
 #include "Engine.hpp"
 #include "EngineSDL.hpp"
 
@@ -30,8 +31,10 @@ int main(int argc, char* argv[]){
 	  Engine<GridTaquin> e(n,m,human);
 	  e.Run();
 	}
-	else if (game == "2048")
-	  return 0;
+	else if (game == "2048"){
+	  Engine<Grid2048> e(n,m,human);
+	  e.Run();
+	}
 	else if (game == "sokoban")
 	  return 0;
 	else
@@ -41,8 +44,10 @@ int main(int argc, char* argv[]){
 	  EngineSDL<GridTaquin> e(n,m,human);
 	  e.Run();
 	}
-	else if (game == "2048")
-	  return 0;
+	else if (game == "2048"){
+	  EngineSDL<Grid2048> e(n,m,human);
+	  e.Run();
+	}
 	else if (game == "sokoban")
 	  return 0;
 	else
