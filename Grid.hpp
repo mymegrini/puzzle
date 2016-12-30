@@ -4,7 +4,7 @@
 #include <cassert>
 #include "Box.hpp"
 
-enum class Input {UP, DOWN, LEFT, RIGHT}; 
+enum class Input {UP, DOWN, LEFT, RIGHT};
 
 class Grid { /* interface */
 
@@ -12,6 +12,7 @@ public:
   Grid(int n, int m):n(n), m(m), array(new Box[n*m]){}
   Box operator()(int i, int j){	return Get(i,j); }
   virtual void Init() = 0; // Initialize Box contents
+  virtual void Start() = 0; // Start game
   virtual void Print() = 0; // Print the grid in text-mode
   virtual void Play(Input user) = 0; // Modify Grid according to user input
   virtual bool GameOver() = 0; // Returns true if game is over

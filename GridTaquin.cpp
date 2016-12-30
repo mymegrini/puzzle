@@ -15,7 +15,7 @@ void GridTaquin::Init(){
   }
 }
 
-void GridTaquin::Shuffle(){
+void GridTaquin::Start(){
   
   unsigned seed = chrono::system_clock::now().time_since_epoch().count();
   shuffle(array, array+m*n, default_random_engine(seed));

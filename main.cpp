@@ -2,18 +2,17 @@
 
 #include "Box.hpp"
 #include "GridTaquin.hpp"
+#include "Game.hpp"
 
 using namespace std;
 
 int main(int argc, char* argv[]){
 
-  int n = 4; //number of lines
-  int m = 4; //number of columns
   bool text = false; //text-mode
   bool human = true; //auto-mode
   string game = ""; //game name
 
-  parse_argv(argc, argv, n, m, text, human, game);
+  parse_argv(argc, argv, n, m, text, human, game); // Defined in main.hpp
 
   cout << "game: " << game << " size:" << n << 'x' << m;
   if (text)
