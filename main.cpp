@@ -24,10 +24,6 @@ int main(int argc, char* argv[]){
 	cout << " auto-mode";
   cout << endl;
 
-  Box b = {BoxType::EMPTY, 7};
-  Box a = b;
-  cout << "Box a(" << a.Value() << ")" << endl;
-
   if (game == "taquin"){
 	Engine<GridTaquin> e(n,m,human);
 	e.Run();
