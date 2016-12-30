@@ -22,8 +22,7 @@ private:
   const int height;
   SDL_Window* window = NULL;
   SDL_Renderer* renderer = NULL;
-  SDL_Texture* texture = NULL;
-  void RenderBox(Box, int, int);
+  void RenderBox(Box b, int x, int y);
 };
 
 #endif

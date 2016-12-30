@@ -6,7 +6,7 @@
 class GridTaquin : public Grid {
 
 public:
-  GridTaquin(int i=3, int j=4):Grid(i,j){}
+  GridTaquin(int i=4, int j=4):Grid(i,j){}
   virtual void Init() override;
   virtual void Start() override;
   virtual void Print() override;

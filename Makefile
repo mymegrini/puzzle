@@ -9,7 +9,7 @@ all 		: $(EXE)
 $(EXE) 		: $(OBJ)
 	$(CXX) 	-o $@ $^ -lSDL2
 
-main.o 		: main.hpp Box.hpp Grid.hpp GridTaquin.hpp Engine.hpp
+main.o 		: main.hpp Box.hpp Grid.hpp GridTaquin.hpp Engine.hpp EngineSDL.hpp
 GridTaquin.o: GridTaquin.hpp Grid.hpp Box.hpp Input.hpp
 Window.o	: Window.hpp Grid.hpp Input.hpp
 

@@ -22,11 +22,7 @@ public:
 
   virtual void Run(){
 
-	g.Init();
-	g.Print();
-	std::this_thread::sleep_for(2s);
-	g.Start();
-	g.Print();
+	Init();
 	while(!g.GameOver()){
 	  Input input = Player();
 	  switch(input){
@@ -37,10 +33,28 @@ public:
 	  default :
 		g.Play(input);
 	  }
-	  g.Print();
+	  Print();
+	}
+	while(true){
+	  Input input = Player();
+	  switch(input){
+	  case Input::CLOSE:
+		return;
+	  default:
+		;
+	  }
 	}
   }
 
+protected:
+  virtual void Print(){ g.Print(); }
+  virtual void Init(){
+	g.Init();
+	Print();
+	std::this_thread::sleep_for(2s);
+	g.Start();
+	Print();	
+  }
   virtual Input Player(){
 
 	if(human){
@@ -64,11 +78,9 @@ public:
 	else
 	  return AutoPlayer();
   }
+  virtual Input AutoPlayer(){
 
-protected:
-  Input AutoPlayer(){
-
-	std::this_thread::sleep_for(1s);
+	std::this_thread::sleep_for(500ms);
 	switch(rand() % 4){
 	case 0 :
 	  return Input::UP;

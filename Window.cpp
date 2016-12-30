@@ -3,15 +3,16 @@
 #include <iostream>
 using namespace std;
 
-#define BOX_SIZE 50
-#define BOX_BORDER 2
+#define BOX_SIZE 100
+#define BOX_BORDER 5
 #define BOX_WIDTH (BOX_SIZE-2*BOX_BORDER)
+#define MARGIN 50
 
-#define BLACK 255, 0, 0, 0
+#define BLACK 0, 0, 0, 255
 #define WHITE 255, 255, 255, 255
 
-Window::Window(int n, int m): n(n), m(m), width(BOX_SIZE*(n+2)),
-							  height(BOX_SIZE*(m+2)){}
+Window::Window(int n, int m): n(n), m(m), width(BOX_SIZE*n+2*MARGIN),
+							  height(BOX_SIZE*n+2*MARGIN){}
 
 void Window::Init() {
 
@@ -24,7 +25,7 @@ void Window::Init() {
   //Create window
   window =
 	SDL_CreateWindow("Puzzle", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-					 width, height,	SDL_WINDOW_BORDERLESS|SDL_WINDOW_SHOWN );
+					 width, height,	SDL_WINDOW_SHOWN );
 
   if( window == NULL ) {
 	cerr << "Window could not be created! SDL_Error:";
@@ -47,7 +48,7 @@ Input Window::Player(){
 
   SDL_Event event;
 
-  while(SDL_PollEvent(&event)) {
+  while(SDL_WaitEventTimeout(&event, 50)) {
 	switch(event.type){
 	case SDL_QUIT :
 	  return Input::CLOSE;
@@ -62,27 +63,31 @@ Input Window::Player(){
 	  }
 	  break;
 	default :
-	  return Input::UNHANDLED;
+	  return Input::NONE;
 	}
+	SDL_PumpEvents();
   }
   return Input::NONE;
 }
 
 void Window::Render(Grid& g){
 
-  SDL_SetRenderDrawColor(renderer, WHITE);
-  SDL_RenderClear(renderer);
   SDL_SetRenderDrawColor(renderer, BLACK);
+  SDL_RenderClear(renderer);
+  SDL_SetRenderDrawColor(renderer, WHITE);
   for (int i=0; i<n; ++i)
 	for(int j=0; j<m; ++j)
-	  RenderBox(g(i,j), (i+1)*BOX_SIZE, (j+1)*BOX_SIZE);
+	  RenderBox(g(i,j), j*BOX_SIZE+MARGIN, i*BOX_SIZE+MARGIN);
+  SDL_RenderPresent(renderer);
 }
 
 void Window::RenderBox(Box b, int x, int y){
 
-  //Drawing square
-  SDL_Rect box = { x, y, BOX_WIDTH, BOX_WIDTH };
-  SDL_RenderDrawRect(renderer, &box);
+  if (b.Type() != BoxType::EMPTY){
+	//Drawing square
+	SDL_Rect box = { x, y, BOX_WIDTH, BOX_WIDTH };
+	SDL_RenderDrawRect(renderer, &box);
+  }
 }
 
 Window::~Window(){
