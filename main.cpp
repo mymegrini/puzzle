@@ -3,6 +3,7 @@
 #include "Box.hpp"
 #include "GridTaquin.hpp"
 #include "Engine.hpp"
+#include "Grid2048.hpp"
 
 using namespace std;
 
@@ -28,6 +29,12 @@ int main(int argc, char* argv[]){
 	Engine<GridTaquin> e(n,m,human);
 	e.Run();
   }
+
+  if (game == "2048"){
+	Engine<Grid2048> e(n,m,human);
+	e.Run();
+  }
+  
 
   return 0;
 }
