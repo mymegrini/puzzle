@@ -44,22 +44,22 @@ void Texture::Init(SDL_Renderer* r){
 	  cerr << SDL_GetError() << endl;
 	}
   }
-  LoadImage("assets/coin_gold.png", filledhole);
-  LoadImage("assets/crate.png", wall);
-  LoadImage("assets/front.png", character);
-  LoadImage("assets/key_yellow.png", crate);
-  LoadImage("assets/lock_yellow.png", hole);
+  LoadImage("assets/coin_gold.png", &filledhole);
+  LoadImage("assets/crate.png", &wall);
+  LoadImage("assets/front.png", &character);
+  LoadImage("assets/key_yellow.png", &crate);
+  LoadImage("assets/lock_yellow.png", &hole);
 }
 
-void Texture::LoadImage(const char* path, SDL_Texture* target){
+void Texture::LoadImage(const char* path, SDL_Texture** target){
 
   SDL_Surface* image = IMG_Load(path);
   if (image == NULL){
 	cerr << "Couldn't load image (" << path << "). SDL_Error: ";
 	cerr << SDL_GetError() << endl;
   }
-  target  = SDL_CreateTextureFromSurface(renderer, image);
-  if (target == NULL){
+  *target = SDL_CreateTextureFromSurface(renderer, image);
+  if (*target == NULL){
 	cerr <<"Couldn't create Texture from image (" <<path <<"). SDL_Error: ";
 	cerr <<SDL_GetError() << endl;
   }

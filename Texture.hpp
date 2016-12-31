@@ -31,7 +31,7 @@ private:
   static TTF_Font* font;
   static SDL_Color black;
   static SDL_Color white;
-  static void LoadImage(const char* path, SDL_Texture* target); 
+  static void LoadImage(const char* path, SDL_Texture** target);
 };
 
 #endif
