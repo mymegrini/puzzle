@@ -14,9 +14,9 @@ void Grid2048::Start(){
   int a(rand()%(m*n)),b(rand()%(m*n));
   while(a==b) b=rand()%(m*n);
   array[a].Type(BoxType::INT);
-  array[a].Value(2);
+  array[a].Value(rand24());
   array[b].Type(BoxType::INT);
-  array[b].Value(4);
+  array[b].Value(rand24());
   //unsigned seed = chrono::system_clock::now().time_since_epoch().count();
 }
 
@@ -55,58 +55,100 @@ void Grid2048::Play(Input user){
     int j = empty - i*m;
   
     assert(Get(i,j).Type()==BoxType::EMPTY && "Empty index is corrupted.");*/
+  int newbox;
   switch(user){
   case Input::UP :
     for(int i=1;i<n;++i){
-      for(int j=0;i<m;++j){
-	if(Get(i-1,j).Type() == BoxType::EMPTY){
-	  swap(Get(i,j), Get(i-1,j));
-	  if(Get(i-1,j).Value() == Get(i,j).Value()){
-	    Get(i-1,j).Value(pow(Get(i-1,j).Value(),2));
-	    Get(i,j).Type(BoxType::EMPTY);
-	  }
+      for(int j=0;j<m;++j){
+	int k=i;
+	while(Get(k-1,j).Type() == BoxType::EMPTY){
+	  --k;
+	  if(k==0) break;
+	}
+	swap(Get(i,j), Get(k,j));
+	if(k!=0 &&  Get(k-1,j).Value() == Get(k,j).Value()){
+	  Get(k-1,j).Value(Get(k-1,j).Value()*2);
+	  Get(k,j).Type(BoxType::EMPTY);
+	  Get(k,j).Value(0);
 	}
       }
     }
+    newbox=rand()%m;
+    if(Get(n-1,newbox).Type()!=BoxType::EMPTY){
+      newbox=0;
+      while(newbox!=m && Get(n-1,newbox).Type()!=BoxType::EMPTY) newbox++;
+    }
+    Get(n-1,newbox).Type(BoxType::INT);
+    Get(n-1,newbox).Value(rand24());
     break;
   case Input::DOWN :
-    for(int i=n-1;i>-1;--i){
+    for(int i=n-2;i>-1;--i){
       for(int j=0;j<m;++j){
-	if(Get(i+1,j).Type() == BoxType::EMPTY){
-	  swap(Get(i,j), Get(i+1,j));
-	  if(Get(i+1,j).Value() == Get(i,j).Value()){
-	    Get(i+1,j).Value(pow(Get(i+1,j).Value(),2));
-	    Get(i,j).Type(BoxType::EMPTY);
-	  }
+	int k=i;
+	while(Get(k+1,j).Type() == BoxType::EMPTY){
+	  ++k;
+	  if(k==n-1) break;
+	}
+	swap(Get(i,j), Get(k,j));
+	if(k!=n-1 &&  Get(k+1,j).Value() == Get(k,j).Value()){
+	  Get(k+1,j).Value(Get(k+1,j).Value()*2);
+	  Get(k,j)=Box();
 	}
       }
     }
+    newbox=rand()%m;
+    if(Get(0,newbox).Type()!=BoxType::EMPTY){
+      newbox=0;
+      while(newbox!=m && Get(0,newbox).Type()!=BoxType::EMPTY) newbox++;
+    }
+    Get(0,newbox).Type(BoxType::INT);
+    Get(0,newbox).Value(rand24());
     break;
   case Input::LEFT :
     for(int i=0;i<n;++i){
       for(int j=1;j<m;++j){
-	if(Get(i,j-1).Type() == BoxType::EMPTY){
-	  swap(Get(i,j), Get(i,j-1));
-	  if(Get(i,j-1).Value() == Get(i,j).Value()){
-	    Get(i,j-1).Value(pow(Get(i,j-1).Value(),2));
-	    Get(i,j).Type(BoxType::EMPTY);
-	  }
+	int k=j;
+	while(Get(i,k-1).Type() == BoxType::EMPTY){
+	  --k;
+	  if(k==0) break;
+	}
+	swap(Get(i,j), Get(i,k));
+	if(k!=0 &&  Get(i,k-1).Value() == Get(i,k).Value()){
+	  Get(i,k-1).Value(Get(i,k-1).Value()*2);
+	  Get(i,k)=Box();
 	}
       }
     }
+    newbox=rand()%n;
+    if(Get(newbox,m-1).Type()!=BoxType::EMPTY){
+      newbox=0;
+      while(newbox!=n && Get(newbox,m-1).Type()!=BoxType::EMPTY) newbox++;
+    }
+    Get(newbox,m-1).Type(BoxType::INT);
+    Get(newbox,m-1).Value(rand24());
     break;
   case Input::RIGHT :
     for(int i=0;i<n;++i){
-      for(int j=m-1;j>-1;--j){
-	if(Get(i,j+1).Type() == BoxType::EMPTY) {
-	  swap(Get(i,j), Get(i,j+1));
-	  if(Get(i,j+1).Value() == Get(i,j).Value()){
-	    Get(i,j+1).Value(pow(Get(i,j+1).Value(),2));
-	    Get(i,j).Type(BoxType::EMPTY);
-	  }
+      for(int j=m-2;j>-1;--j){
+	int k=j;
+	while(Get(i,k+1).Type() == BoxType::EMPTY){
+	  ++k;
+	  if(k==m-1) break;
+	}
+	swap(Get(i,j), Get(i,k));
+	if(k!=m-1 &&  Get(i,k+1).Value() == Get(i,k).Value()){
+	  Get(i,k+1).Value(Get(i,k+1).Value()*2);
+	  Get(i,k)=Box();
 	}
       }
     }
+    newbox=rand()%n;
+    if(Get(newbox,0).Type()!=BoxType::EMPTY){
+      newbox=0;
+      while(newbox!=n && Get(newbox,0).Type()!=BoxType::EMPTY) newbox++;
+    }
+    Get(newbox,0).Type(BoxType::INT);
+    Get(newbox,0).Value(rand24());
     break;
   default:
     ;
@@ -134,4 +176,10 @@ Grid2048& Grid2048::operator=(const Grid2048& g){
   for (int i=0; i<m*n; ++i)
     array[i] = g.array[i];
   return *this;
+}
+
+
+int Grid2048::rand24(){
+  if(rand()%2 == 0) return 2;
+  return 4;
 }

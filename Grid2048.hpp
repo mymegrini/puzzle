@@ -13,7 +13,7 @@ public:
   virtual void Play(Input user) override;
   virtual bool GameOver() override;
   Grid2048& operator=(const Grid2048&);
-
+  int rand24();
 };
 
 #endif
