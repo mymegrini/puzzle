@@ -2,8 +2,10 @@
 
 #include "Box.hpp"
 #include "GridTaquin.hpp"
-#include "Engine.hpp"
 #include "Grid2048.hpp"
+#include "Engine.hpp"
+
+#include "EngineSDL.hpp"
 
 using namespace std;
 
@@ -18,17 +20,31 @@ int main(int argc, char* argv[]){
   parse_argv(argc, argv, n, m, text, human, game); // Defined in main.hpp
   srand(time(0)); // Seeding RNG
 
-  cout << "game: " << game << " size:" << n << 'x' << m;
   if (text)
-	cout << " text-mode";
-  if (!human)
-	cout << " auto-mode";
-  cout << endl;
 
-  if (game == "taquin"){
-	Engine<GridTaquin> e(n,m,human);
-	e.Run();
-  }
+	if (game == "taquin"){
+	  Engine<GridTaquin> e(n,m,human);
+	  e.Run();
+	}
+	else if (game == "2048"){
+	  Engine<Grid2048> e(n,m,human);
+	  e.Run();
+	}
+	else if (game == "sokoban"){}
+	else {}
+
+  else
+
+	if (game == "taquin"){
+	  EngineSDL<GridTaquin> e(n,m,human);
+	  e.Run();
+	}
+	else if (game == "2048"){
+	  EngineSDL<Grid2048> e(n,m,human);
+	  e.Run();
+	}
+	else if (game == "sokoban"){}
+	else {}
 
   if (game == "2048"){
 	Engine<Grid2048> e(n,m,human);

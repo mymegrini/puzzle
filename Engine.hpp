@@ -22,6 +22,7 @@ public:
 
   virtual void Run(){
 
+<<<<<<< HEAD
     g.Init();
     g.Print();
     std::this_thread::sleep_for(2s);
@@ -31,8 +32,41 @@ public:
       g.Play(Player());
       g.Print();
     }
+=======
+	Init();
+	while(!g.GameOver()){
+	  Input input = Player();
+	  switch(input){
+	  case Input::CLOSE:
+		return;
+	  case Input::NONE:
+		break;
+	  default :
+		g.Play(input);
+	  }
+	  Print();
+	}
+	while(true){
+	  Input input = Player();
+	  switch(input){
+	  case Input::CLOSE:
+		return;
+	  default:
+		;
+	  }
+	}
+>>>>>>> 4b0b11cab99a5d3e2cc0994e9092e4a1e14dd8e0
   }
 
+protected:
+  virtual void Print(){ g.Print(); }
+  virtual void Init(){
+	g.Init();
+	Print();
+	std::this_thread::sleep_for(2s);
+	g.Start();
+	Print();	
+  }
   virtual Input Player(){
 
     if(human){
@@ -60,23 +94,20 @@ public:
     else
       return AutoPlayer();
   }
-
-protected:
-  Input AutoPlayer(){
-	
-    std::this_thread::sleep_for(1s);
-    switch(rand() % 4){
-    case 0 :
-      return Input::UP;
-    case 1 :
-      return Input::LEFT;
-    case 2 :
-      return Input::DOWN;
-    case 3 :
-      return Input::RIGHT;
-    default :
-      return Input::UNHANDLED;
-    }
+  virtual Input AutoPlayer(){
+	std::this_thread::sleep_for(500ms);
+	switch(rand() % 4){
+	case 0 :
+	  return Input::UP;
+	case 1 :
+	  return Input::LEFT;
+	case 2 :
+	  return Input::DOWN;
+	case 3 :
+	  return Input::RIGHT;
+	default :
+	  return Input::UNHANDLED;
+	}
   }
   bool human;
   G g;

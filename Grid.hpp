@@ -16,6 +16,8 @@ public:
   virtual void Print() = 0; // Print the grid in text-mode
   virtual void Play(Input user) = 0; // Modify Grid according to user input
   virtual bool GameOver() = 0; // Returns true if game is over
+  int N() { return n; }
+  int M() { return m; }
   ~Grid(){
 	if (array != nullptr)
 	  delete[] array;
