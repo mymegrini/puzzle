@@ -102,7 +102,7 @@ void Texture::RenderFit(int w, int h, SDL_Point* center){
 	texture = crate;
 	break;
   case BoxType::HOLE:
-	texture = (box.Value()==-1?hole:(box.Value()==0?character:filledhole));
+	texture = (box.Value()==0?hole:filledhole);
 	break;
   case BoxType::WALL:
 	texture = wall;
