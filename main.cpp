@@ -19,14 +19,8 @@ int main(int argc, char* argv[]){
   parse_argv(argc, argv, n, m, text, human, game); // Defined in main.hpp
   srand(time(0)); // Seeding RNG
 
-  cout << "game: " << game << " size:" << n << 'x' << m;
   if (text)
-	cout << " text-mode";
-  if (!human)
-	cout << " auto-mode";
-  cout << endl;
 
-  if (text)
 	if (game == "taquin"){
 	  Engine<GridTaquin> e(n,m,human);
 	  e.Run();
@@ -35,11 +29,11 @@ int main(int argc, char* argv[]){
 	  Engine<Grid2048> e(n,m,human);
 	  e.Run();
 	}
-	else if (game == "sokoban")
-	  return 0;
-	else
-	  return 0;
+	else if (game == "sokoban"){}
+	else {}
+
   else
+
 	if (game == "taquin"){
 	  EngineSDL<GridTaquin> e(n,m,human);
 	  e.Run();
@@ -48,10 +42,8 @@ int main(int argc, char* argv[]){
 	  EngineSDL<Grid2048> e(n,m,human);
 	  e.Run();
 	}
-	else if (game == "sokoban")
-	  return 0;
-	else
-	  return 0;
+	else if (game == "sokoban"){}
+	else {}
 
   return 0;
 }

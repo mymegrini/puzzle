@@ -1,6 +1,7 @@
 #include "Window.hpp"
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 #define BOX_SIZE 100
@@ -33,14 +34,26 @@ void Window::Init() {
 	return;
   }
 
-  //get Renderer
+  //get renderer
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC |
 								SDL_RENDERER_ACCELERATED);
 
   if( renderer == NULL ) {
-	cerr << "Renderer could not be created! SDL_Eroor: ";
+	cerr << "Renderer could not be created! SDL_Error: ";
 	cerr << SDL_GetError() << endl;
 	return;
+  }
+
+  //get font
+  if( TTF_Init() == -1){
+	cerr << "Failed to initialize TTF library. SDL_Error: ";
+	cerr << SDL_GetError() << endl;
+  }	else {
+	font = TTF_OpenFont("Squareo.ttf", 24);
+	if( font == NULL ) {
+	  cerr << "Couldn't open ttf font. SDL_Error: ";
+	  cerr << SDL_GetError() << endl;
+	}
   }
 }
 
@@ -83,12 +96,40 @@ void Window::Render(Grid& g){
 
 void Window::RenderBox(Box b, int x, int y){
 
-  if (b.Type() != BoxType::EMPTY){
-	//Drawing square
-	SDL_Rect box = { x, y, BOX_WIDTH, BOX_WIDTH };
+  SDL_Rect box;
+
+  switch(b.Type()){
+  case BoxType::EMPTY :
+	box = { x, y, BOX_WIDTH, BOX_WIDTH };
 	SDL_RenderDrawRect(renderer, &box);
+	return;
+  case BoxType::INT :
+	RenderInt(b, x, y);
+	return;
+  default :
+	RenderImage(b, x, y);
+	return;
   }
 }
+
+void Window::RenderInt(Box b, int x, int y){
+
+  SDL_Rect box = { x, y, BOX_WIDTH,
+				   BOX_WIDTH };
+  SDL_RenderFillRect(renderer, &box);
+  box = { x+BOX_BORDER, y+BOX_BORDER, BOX_WIDTH-BOX_BORDER,
+				   BOX_WIDTH-BOX_BORDER };
+  SDL_Color black = {0,0,0};
+  string tmp = std::to_string(b.Value());
+  const char* number = tmp.c_str();
+  SDL_Surface* surface = TTF_RenderText_Solid(font, number, black);
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+  SDL_FreeSurface(surface);
+  SDL_RenderCopy(renderer, texture, NULL, &box);
+  SDL_DestroyTexture(texture);
+}
+
+void Window::RenderImage(Box b, int x, int y){}
 
 Window::~Window(){
 
