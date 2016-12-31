@@ -22,17 +22,6 @@ public:
 
   virtual void Run(){
 
-<<<<<<< HEAD
-    g.Init();
-    g.Print();
-    std::this_thread::sleep_for(2s);
-    g.Start();
-    g.Print();
-    while(!g.GameOver()){
-      g.Play(Player());
-      g.Print();
-    }
-=======
 	Init();
 	while(!g.GameOver()){
 	  Input input = Player();
@@ -55,7 +44,6 @@ public:
 		;
 	  }
 	}
->>>>>>> 4b0b11cab99a5d3e2cc0994e9092e4a1e14dd8e0
   }
 
 protected:
