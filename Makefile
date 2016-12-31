@@ -7,11 +7,12 @@ EXE = puzzle
 all 		: $(EXE)
 
 $(EXE) 		: $(OBJ)
-	$(CXX) 	-o $@ $^ `sdl2-config --libs` -lSDL2 -lSDL2_ttf
+	$(CXX) 	-o $@ $^ `sdl2-config --libs` -lSDL2 -lSDL2_ttf -lSDL2_image
 
 main.o 		: main.hpp Box.hpp Grid.hpp GridTaquin.hpp Engine.hpp EngineSDL.hpp
 GridTaquin.o: GridTaquin.hpp Grid.hpp Box.hpp Input.hpp
-Window.o	: Window.hpp Grid.hpp Input.hpp
+Window.o	: Window.hpp Grid.hpp Input.hpp Texture.hpp
+Texture.o	: Texture.hpp Box.hpp
 
 clean 		:
 	rm -f $(OBJ)

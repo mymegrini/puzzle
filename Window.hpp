@@ -24,8 +24,6 @@ private:
   SDL_Renderer* renderer = NULL;
   TTF_Font *font = NULL;
   void RenderBox(Box b, int x, int y);
-  void RenderImage(Box b, int x, int y);
-  void RenderInt(Box b, int x, int y);
 };
 
 #endif

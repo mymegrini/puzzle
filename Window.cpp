@@ -1,18 +1,20 @@
 #include "Window.hpp"
+#include "Texture.hpp"
 
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 #define BOX_SIZE 100
-#define BOX_BORDER 5
-#define BOX_WIDTH (BOX_SIZE-2*BOX_BORDER)
-#define MARGIN 50
+#define BOX_BORDER (BOX_SIZE/20)
+#define BOX_INNER_SIZE (BOX_SIZE-2*BOX_BORDER)
+#define MARGIN (BOX_SIZE/2)
 
 #define BLACK 0, 0, 0, 255
 #define WHITE 255, 255, 255, 255
 
-Window::Window(int n, int m): n(n), m(m), width(BOX_SIZE*n+2*MARGIN),
+Window::Window(int n, int m): n(n), m(m), width(BOX_SIZE*m+2*MARGIN),
 							  height(BOX_SIZE*n+2*MARGIN){}
 
 void Window::Init() {
@@ -44,17 +46,7 @@ void Window::Init() {
 	return;
   }
 
-  //get font
-  if( TTF_Init() == -1){
-	cerr << "Failed to initialize TTF library. SDL_Error: ";
-	cerr << SDL_GetError() << endl;
-  }	else {
-	font = TTF_OpenFont("Squareo.ttf", 24);
-	if( font == NULL ) {
-	  cerr << "Couldn't open ttf font. SDL_Error: ";
-	  cerr << SDL_GetError() << endl;
-	}
-  }
+  Texture::Init(renderer);
 }
 
 Input Window::Player(){
@@ -85,53 +77,39 @@ Input Window::Player(){
 
 void Window::Render(Grid& g){
 
-  SDL_SetRenderDrawColor(renderer, BLACK);
-  SDL_RenderClear(renderer);
   SDL_SetRenderDrawColor(renderer, WHITE);
+  SDL_RenderClear(renderer);
+  SDL_SetRenderDrawColor(renderer, BLACK);
   for (int i=0; i<n; ++i)
-	for(int j=0; j<m; ++j)
+	for(int j=0; j<m; ++j)	  
 	  RenderBox(g(i,j), j*BOX_SIZE+MARGIN, i*BOX_SIZE+MARGIN);
   SDL_RenderPresent(renderer);
 }
 
 void Window::RenderBox(Box b, int x, int y){
 
-  SDL_Rect box;
+  int w = BOX_INNER_SIZE;
+  int h = BOX_INNER_SIZE;
+  SDL_Point centre = { x+BOX_INNER_SIZE/2, y+BOX_INNER_SIZE/2 };
+  SDL_Rect box = { x, y, BOX_INNER_SIZE, BOX_INNER_SIZE };
+  Texture texture(b);
 
   switch(b.Type()){
   case BoxType::EMPTY :
-	box = { x, y, BOX_WIDTH, BOX_WIDTH };
-	SDL_RenderDrawRect(renderer, &box);
 	return;
   case BoxType::INT :
-	RenderInt(b, x, y);
-	return;
+	SDL_RenderDrawRect(renderer, &box);
+	h /= 2;
   default :
-	RenderImage(b, x, y);
+	texture.RenderFit(w, h, &centre);
 	return;
   }
 }
 
-void Window::RenderInt(Box b, int x, int y){
-
-  SDL_Rect box = { x, y, BOX_WIDTH,
-				   BOX_WIDTH };
-  SDL_RenderFillRect(renderer, &box);
-  box = { x+BOX_BORDER, y+BOX_BORDER, BOX_WIDTH-BOX_BORDER,
-				   BOX_WIDTH-BOX_BORDER };
-  SDL_Color black = {0,0,0};
-  string tmp = std::to_string(b.Value());
-  const char* number = tmp.c_str();
-  SDL_Surface* surface = TTF_RenderText_Solid(font, number, black);
-  SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-  SDL_FreeSurface(surface);
-  SDL_RenderCopy(renderer, texture, NULL, &box);
-  SDL_DestroyTexture(texture);
-}
-
-void Window::RenderImage(Box b, int x, int y){}
-
 Window::~Window(){
+
+  //Free static textures
+  Texture::Free();
 
   //Destroy renderer
   SDL_DestroyRenderer( renderer );
