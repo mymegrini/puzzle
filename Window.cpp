@@ -6,14 +6,14 @@
 
 using namespace std;
 
-#define BOX_SIZE 100
+#define BOX_SIZE 90
 #define BOX_BORDER (BOX_SIZE/20)
 #define BOX_INNER_SIZE (BOX_SIZE-2*BOX_BORDER)
 #define MARGIN (BOX_SIZE/2)
 
-#define BLACK 0, 0, 0, 255
-#define GRAY 200, 200, 200, 255
-#define WHITE 230, 230, 255, 255
+#define BLACK 0, 0, 0, 200
+#define GRAY 200, 200, 200, 200
+#define WHITE 240, 240, 255, 255
 
 Window::Window(int n, int m): n(n), m(m), width(BOX_SIZE*m+2*MARGIN),
 							  height(BOX_SIZE*n+2*MARGIN){}
@@ -91,7 +91,7 @@ void Window::Render(Grid& g){
   SDL_RenderClear(renderer);
   SDL_SetRenderDrawColor(renderer, BLACK);
   for (int i=0; i<n; ++i)
-	for(int j=0; j<m; ++j)	  
+	for(int j=0; j<m; ++j)
 	  RenderBox(g(i,j), j*BOX_SIZE+MARGIN, i*BOX_SIZE+MARGIN);
   SDL_RenderPresent(renderer);
 }
@@ -114,7 +114,14 @@ void Window::RenderBox(Box b, int x, int y){
 	if (b.Value() == -1){
 	  SDL_RenderFillRect(renderer, &box);
 	  return;
+	} else {
+	  int color = b.Value();
+	  SDL_SetRenderDrawColor(renderer, 255-color/16, 255-16*((color/16) % 16),
+							 255-16*(color % 16), 200);
+	  SDL_RenderFillRect(renderer, &box);
+	  SDL_SetRenderDrawColor(renderer, BLACK);
 	}
+
 	SDL_RenderDrawRect(renderer, &box);
 	h /= 2;
   default :
