@@ -17,7 +17,6 @@ void Grid2048::Start(){
   array[a].Value(rand24());
   array[b].Type(BoxType::INT);
   array[b].Value(rand24());
-  //unsigned seed = chrono::system_clock::now().time_since_epoch().count();
 }
 
 void Grid2048::Print(){
@@ -49,13 +48,7 @@ void Grid2048::Print(){
 
 
 void Grid2048::Play(Input user){
-  /*array[i-1].Type(BoxType::INT);
-    array[i-1].Value(i);
-    int i = empty/m;
-    int j = empty - i*m;
-  
-    assert(Get(i,j).Type()==BoxType::EMPTY && "Empty index is corrupted.");*/
-  int newbox;
+  bool hasmove=false;
   switch(user){
   case Input::UP :
     for(int i=1;i<n;++i){
@@ -65,21 +58,15 @@ void Grid2048::Play(Input user){
 	  --k;
 	  if(k==0) break;
 	}
+	if(k!=i) hasmove=true;
 	swap(Get(i,j), Get(k,j));
 	if(k!=0 &&  Get(k-1,j).Value() == Get(k,j).Value()){
 	  Get(k-1,j).Value(Get(k-1,j).Value()*2);
-	  Get(k,j).Type(BoxType::EMPTY);
-	  Get(k,j).Value(0);
+	  Get(k,j)=Box();
+	  hasmove=true;
 	}
       }
     }
-    newbox=rand()%m;
-    if(Get(n-1,newbox).Type()!=BoxType::EMPTY){
-      newbox=0;
-      while(newbox!=m && Get(n-1,newbox).Type()!=BoxType::EMPTY) newbox++;
-    }
-    Get(n-1,newbox).Type(BoxType::INT);
-    Get(n-1,newbox).Value(rand24());
     break;
   case Input::DOWN :
     for(int i=n-2;i>-1;--i){
@@ -89,20 +76,15 @@ void Grid2048::Play(Input user){
 	  ++k;
 	  if(k==n-1) break;
 	}
+	if(k!=i) hasmove=true;
 	swap(Get(i,j), Get(k,j));
 	if(k!=n-1 &&  Get(k+1,j).Value() == Get(k,j).Value()){
 	  Get(k+1,j).Value(Get(k+1,j).Value()*2);
 	  Get(k,j)=Box();
+	  hasmove=true;
 	}
       }
     }
-    newbox=rand()%m;
-    if(Get(0,newbox).Type()!=BoxType::EMPTY){
-      newbox=0;
-      while(newbox!=m && Get(0,newbox).Type()!=BoxType::EMPTY) newbox++;
-    }
-    Get(0,newbox).Type(BoxType::INT);
-    Get(0,newbox).Value(rand24());
     break;
   case Input::LEFT :
     for(int i=0;i<n;++i){
@@ -112,20 +94,15 @@ void Grid2048::Play(Input user){
 	  --k;
 	  if(k==0) break;
 	}
+	if(k!=j) hasmove=true;
 	swap(Get(i,j), Get(i,k));
 	if(k!=0 &&  Get(i,k-1).Value() == Get(i,k).Value()){
 	  Get(i,k-1).Value(Get(i,k-1).Value()*2);
 	  Get(i,k)=Box();
+	  hasmove=true;
 	}
       }
     }
-    newbox=rand()%n;
-    if(Get(newbox,m-1).Type()!=BoxType::EMPTY){
-      newbox=0;
-      while(newbox!=n && Get(newbox,m-1).Type()!=BoxType::EMPTY) newbox++;
-    }
-    Get(newbox,m-1).Type(BoxType::INT);
-    Get(newbox,m-1).Value(rand24());
     break;
   case Input::RIGHT :
     for(int i=0;i<n;++i){
@@ -135,24 +112,36 @@ void Grid2048::Play(Input user){
 	  ++k;
 	  if(k==m-1) break;
 	}
+	if(k!=j) hasmove=true;
 	swap(Get(i,j), Get(i,k));
 	if(k!=m-1 &&  Get(i,k+1).Value() == Get(i,k).Value()){
 	  Get(i,k+1).Value(Get(i,k+1).Value()*2);
 	  Get(i,k)=Box();
+	  hasmove=true;
 	}
       }
     }
-    newbox=rand()%n;
-    if(Get(newbox,0).Type()!=BoxType::EMPTY){
-      newbox=0;
-      while(newbox!=n && Get(newbox,0).Type()!=BoxType::EMPTY) newbox++;
-    }
-    Get(newbox,0).Type(BoxType::INT);
-    Get(newbox,0).Value(rand24());
     break;
+    /* newbox=rand()%n;
+       if(Get(newbox,0).Type()!=BoxType::EMPTY){
+       newbox=0;
+       while(newbox!=n && Get(newbox,0).Type()!=BoxType::EMPTY) newbox++;
+       }
+       Get(newbox,0).Type(BoxType::INT);
+       Get(newbox,0).Value(rand24());*/    
   default:
-    ;
-	
+    ;	
+  }
+  int nbemptybox=0;
+  if(hasmove){
+    for(int i=0; i<m*n; ++i) if(array[i].Type()== BoxType::EMPTY) nbemptybox++;
+    int r=rand()%nbemptybox;
+    int i=-1;
+    while(r!=0){
+      i++;
+      if(array[i].Type()== BoxType::EMPTY) r--;
+    }
+    array[i]=Box(BoxType::INT,rand24());
   }
 }
 
