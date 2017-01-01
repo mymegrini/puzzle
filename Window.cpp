@@ -111,6 +111,10 @@ void Window::RenderBox(Box b, int x, int y){
 	SDL_SetRenderDrawColor(renderer, BLACK);
 	return;
   case BoxType::INT :
+	if (b.Value() == -1){
+	  SDL_RenderFillRect(renderer, &box);
+	  return;
+	}
 	SDL_RenderDrawRect(renderer, &box);
 	h /= 2;
   default :
