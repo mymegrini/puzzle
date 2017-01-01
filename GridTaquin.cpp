@@ -8,7 +8,6 @@
 using namespace std;
 
 void GridTaquin::Init(){
-
   for (int i=1; i<m*n; ++i){
 	array[i-1].Type(BoxType::INT);
 	array[i-1].Value(i);
