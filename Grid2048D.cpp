@@ -1,4 +1,4 @@
-#include "Grid2048vd.hpp"
+#include "Grid2048D.hpp"
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void Grid2048vd::Newbox(){
+void Grid2048D::Newbox(){
   cout << "Utlise bien la fonction d'here" << endl ;
   int nbemptybox=0;
   for(int i=0; i<m*n; ++i) if(array[i].Type()== BoxType::EMPTY) nbemptybox++;

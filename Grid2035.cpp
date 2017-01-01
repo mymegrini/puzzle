@@ -1,4 +1,4 @@
-#include "Grid2048v35.hpp"
+#include "Grid2035.hpp"
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
@@ -8,7 +8,7 @@
 using namespace std;
 
 
-int Grid2048v35::Rand(){
+int Grid2035::Rand(){
   int r =rand()%6; 
   if(r==0) return 2;
   if(r==1) return 4;

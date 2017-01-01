@@ -169,7 +169,6 @@ void Grid2048::Newbox(){
 }
 
 bool Grid2048::GameOver(){
-
   for (int i=0; i<m*n; ++i)
     if (array[i].Type()== BoxType::EMPTY)
       return false;
