@@ -13,12 +13,12 @@ using namespace std;
 
 #define BLACK 0, 0, 0, 255
 #define GRAY 200, 200, 200, 255
-#define WHITE 255, 255, 255, 255
+#define WHITE 230, 230, 255, 255
 
 Window::Window(int n, int m): n(n), m(m), width(BOX_SIZE*m+2*MARGIN),
 							  height(BOX_SIZE*n+2*MARGIN){}
 
-void Window::Init() {
+void Window::Init(const char* title) {
 
   if(SDL_Init(SDL_INIT_VIDEO) < 0){
 	cerr << "SDL could not initialize! SDL_Error: ";
@@ -28,7 +28,7 @@ void Window::Init() {
 
   //Create window
   window =
-	SDL_CreateWindow("Puzzle", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+	SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 					 width, height,	SDL_WINDOW_SHOWN );
 
   if( window == NULL ) {
@@ -36,6 +36,15 @@ void Window::Init() {
 	cerr << SDL_GetError() << endl;
 	return;
   }
+
+  //Set Icon
+  SDL_Surface* icon = IMG_Load("assets/Icon.png");
+  if (icon == NULL){
+	cerr << "Couldn't load image (assets/Icon.png). SDL_Error: ";
+	cerr << SDL_GetError() << endl;
+  }
+  SDL_SetWindowIcon(window, icon);
+  SDL_FreeSurface(icon);
 
   //get renderer
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC |
@@ -102,6 +111,10 @@ void Window::RenderBox(Box b, int x, int y){
 	SDL_SetRenderDrawColor(renderer, BLACK);
 	return;
   case BoxType::INT :
+	if (b.Value() == -1){
+	  SDL_RenderFillRect(renderer, &box);
+	  return;
+	}
 	SDL_RenderDrawRect(renderer, &box);
 	h /= 2;
   default :
@@ -109,6 +122,8 @@ void Window::RenderBox(Box b, int x, int y){
 	return;
   }
 }
+
+void Window::SetTitle(const char* title){ SDL_SetWindowTitle(window, title); }
 
 Window::~Window(){
 

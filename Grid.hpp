@@ -9,7 +9,7 @@
 class Grid { /* interface */
 
 public:
-  Grid(int n, int m):n(n), m(m), array(new Box[n*m]){}
+  Grid(int n, int m, const char* name): Name(name), n(n), m(m), array(new Box[n*m]){}
   Box operator()(int i, int j){	return Get(i,j); }
   virtual void Init() = 0; // Initialize Box contents
   virtual void Start() = 0; // Start game
@@ -22,6 +22,7 @@ public:
 	if (array != nullptr)
 	  delete[] array;
   }
+  const char* Name;
 
 protected:
   int n; // Number of lines

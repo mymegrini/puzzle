@@ -15,9 +15,10 @@ public:
 
 protected:
   Window* window;
+  virtual void PrintGameOver(){ window->SetTitle("Game Over"); }
   virtual void Print() override { window->Render(this->g); }
   virtual void Init() override {
-	window->Init();
+	window->Init(this->g.Name);
 	this->g.Init();
 	Print();
 	SDL_Delay(1000);

@@ -9,9 +9,10 @@ class Window {
 
 public:
   Window(int n, int m);
-  void Init();
+  void Init(const char* title);
   Input Player();
   void Render(Grid&);
+  void SetTitle(const char* title);
   ~Window();
 
 private:
