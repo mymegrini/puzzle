@@ -35,6 +35,8 @@ endif
 main.o 		: main.hpp Box.hpp Grid.hpp GridTaquin.hpp Engine.hpp EngineSDL.hpp
 GridTaquin.o: GridTaquin.hpp Grid.hpp Box.hpp Input.hpp
 
+Grid2048.o : Grid2048.hpp GridTaquin.hpp Grid.hpp Box.hpp Input.hpp
+
 clean 		:
 	rm -f $(OBJ)
 

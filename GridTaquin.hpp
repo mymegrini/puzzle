@@ -2,11 +2,12 @@
 #define GRIDTAQUIN_H
 
 #include "Grid.hpp"
-
+#include <iostream>
+using namespace std;
 class GridTaquin : public Grid {
 
 public:
-  GridTaquin(int i=4, int j=4):Grid(i,j,"Taquin"){}
+  GridTaquin(int i=4, int j=4,const char* name="Taquin"):Grid(i,j,name){}
   virtual void Init() override;
   virtual void Start() override;
   virtual void Print() override;
