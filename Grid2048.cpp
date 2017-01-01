@@ -116,7 +116,7 @@ void Grid2048::Play(Input user){
 
 void Grid2048::Newbox(){
   int nbemptybox=0;
-  for(int i=0; i<m*n; ++i) if(array[i].Type()== BoxType::EMPTY) nbemptybox++;
+  for(int i=0; i<m*n; ++i) if(array[i].Type()==BoxType::EMPTY) nbemptybox++;
   int r=rand()%nbemptybox;
   int i=0;
   while(r>0){
@@ -125,8 +125,9 @@ void Grid2048::Newbox(){
   }
   int val;
   val=Rand();
+  int p = i-((i%m)*m);
   array[i]=Box(BoxType::INT,val);
-  //cout << "coo new case " << i%m << "  " << i/m << " val " << val;
+  cout << "coo new case " << i << " val " << val;
 }
 
 bool Grid2048::GameOver(){
