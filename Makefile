@@ -2,7 +2,7 @@ CXX = g++ -std=c++14 -Wall
 SRC = $(wildcard *.cpp)
 OBJ = $(patsubst %.cpp,%.o,$(SRC))
 EXE = puzzle
-UNAME_S := $(shell uname -s)
+UNAME := $(shell uname -s)
 SDL2_CFLAGS := $(shell sdl2-config --cflags)
 SDL2_LDFLAGS := $(shell sdl2-config --libs) -lSDL2_ttf -lSDL2_image
 
