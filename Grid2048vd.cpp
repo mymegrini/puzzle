@@ -8,6 +8,7 @@
 using namespace std;
 
 void Grid2048vd::Newbox(){
+  cout << "Utlise bien la fonction d'here" << endl ;
   int nbemptybox=0;
   for(int i=0; i<m*n; ++i) if(array[i].Type()== BoxType::EMPTY) nbemptybox++;
     int r=rand()%nbemptybox;

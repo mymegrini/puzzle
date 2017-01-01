@@ -154,6 +154,7 @@ void Grid2048::Play(Input user){
 }
 
 void Grid2048::Newbox(){
+  cout << "Utlise bien la fonction non here" << endl ;
   int nbemptybox=0;
   for(int i=0; i<m*n; ++i) if(array[i].Type()== BoxType::EMPTY) nbemptybox++;
     int r=rand()%nbemptybox;

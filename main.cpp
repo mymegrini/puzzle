@@ -3,6 +3,8 @@
 #include "Box.hpp"
 #include "GridTaquin.hpp"
 #include "Grid2048.hpp"
+#include "Grid2048v35.hpp"
+#include "Grid2048vd.hpp"
 #include "Engine.hpp"
 
 #include "EngineSDL.hpp"
@@ -22,29 +24,37 @@ int main(int argc, char* argv[]){
 
   if (text)
 
-	if (game == "taquin"){
-	  Engine<GridTaquin> e(n,m,human);
-	  e.Run();
-	}
-	else if (game == "2048"){
-	  Engine<Grid2048> e(n,m,human);
-	  e.Run();
-	}
-	else if (game == "sokoban"){}
-	else {}
+    if (game == "taquin"){
+      Engine<GridTaquin> e(n,m,human);
+      e.Run();
+    }
+    else if (game == "2048"){
+      Engine<Grid2048> e(n,m,human);
+      e.Run();
+    }
+    else if (game == "2048 destroy"){
+      Engine<Grid2048vd> e(n,m,human);
+      e.Run();
+    }
+    else if (game == "2048 multi"){
+      Engine<Grid2048v35> e(n,m,human);
+      e.Run();
+    }
+    else if (game == "sokoban"){}
+    else {}
 
   else
 
-	if (game == "taquin"){
-	  EngineSDL<GridTaquin> e(n,m,human);
-	  e.Run();
-	}
-	else if (game == "2048"){
-	  EngineSDL<Grid2048> e(n,m,human);
-	  e.Run();
-	}
-	else if (game == "sokoban"){}
-	else {}
+    if (game == "taquin"){
+      EngineSDL<GridTaquin> e(n,m,human);
+      e.Run();
+    }
+    else if (game == "2048"){
+      EngineSDL<Grid2048> e(n,m,human);
+      e.Run();
+    }
+    else if (game == "sokoban"){}
+    else {}
 
   return 0;
 }
