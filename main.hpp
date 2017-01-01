@@ -9,8 +9,8 @@
 using namespace std;
 
 static void usage(ostream& out) {
-  out << "Usage: puzzle [-aht] --game NAME --size HxW\n\
-Example : puzzle -t -g taquin -s 9x16" << endl;
+  out << "Usage: puzzle [-ahts] GAMENAME\n\
+Example : puzzle -a taquin -s 9x16" << endl;
 }
 
 void parse_argv(int argc, char* argv[], int& n, int& m, bool& text,
@@ -36,14 +36,14 @@ void parse_argv(int argc, char* argv[], int& n, int& m, bool& text,
       cout << "\n\
 2D Box Puzzle games.\n\
 Available options:\n\
-\t-a, --auto\n\
-\t\tuse automatic player\n\
-\t-s, --size\n\
-\t\tcustom grid size '\n\
-\t-t, --text\n\
-\t\trun in text mode\n\
-\t--help\n\
-\t\tshow this help and exit." << endl;
+ -a, --auto\n\
+\tuse automatic player\n\
+ -s, --size\tHxW\n\
+\tcustom grid size '\n\
+ -t, --text\n\
+\trun in text mode\n\
+ -h, --help\n\
+\tshow this help and exit." << endl;
       exit(0);
     case 'a':
       human = false;
@@ -70,7 +70,9 @@ Available options:\n\
   }
   
   if (optind >= argc){
-    cerr << "No game specified." << endl;
+    cerr << "No game specified." << endl << "Available games: "
+		 << "taquin, 2048, 2048D, 2035, sokoban" << endl;
+	usage(cerr);
 	exit(1);
   } else
 	game = argv[optind++];
