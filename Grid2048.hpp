@@ -8,7 +8,7 @@ using namespace std;
 class Grid2048 : public GridTaquin {
 
 public:
-  Grid2048(int i=4, int j=4):GridTaquin(i,j,"2048"){}
+  Grid2048(int i=4, int j=4, const char* name="2048"):GridTaquin(i,j,name){}
   virtual void Init() override;
   virtual void Start() override;
   virtual void Play(Input user) override;

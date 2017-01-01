@@ -160,13 +160,6 @@ void Grid2048::Newbox(){
     }
     int val;
     val=Rand();
-    //if(mode=="mode23") val=rand23();
-    //if(mode=="mode235") val=rand235();
-    /*int k=rand()%4;
-    if(k==0){
-      val=-1;
-      array[i]=Box(BoxType::CHARACTER,val);
-    }*/
     array[i]=Box(BoxType::INT,val);
 }
 
@@ -202,15 +195,5 @@ int Grid2048::Rand(){
   if(r==1) return 4;
   if(r==2) return 3;
   return 6;
-}
-
-int Grid2048::rand235(){
-  int r =rand()%6; 
-  if(r==0) return 2;
-  if(r==1) return 4;
-  if(r==2) return 3;
-  if(r==3) return 6;
-  if(r==4) return 5;
-  return 10;
-}*/
+  }*/
 
