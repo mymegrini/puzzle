@@ -33,18 +33,10 @@ void Grid2048::Play(Input user){
 	    hasmove=true;
 	    swap(Get(i,j), Get(k,j));
 	  }
-	  if(k!=0){
-	    if(Get(k-1,j).Value()!=0 && Get(k-1,j).Value() == Get(k,j).Value()){
-	      Get(k-1,j).Value(Get(k-1,j).Value()*2);
-	      Get(k,j)=Box();
-	      hasmove=true;
-	    }
-	    if(Get(k-1,j).Type() == BoxType::CHARACTER
-	       || Get(k,j).Type() == BoxType::CHARACTER){
-	      Get(k-1,j)=Box();
-	      Get(k,j)=Box();
-	      hasmove=true;
-	    }
+	  if(k!=0 && Get(k-1,j).Value()!=0 && Get(k-1,j).Value() == Get(k,j).Value()){
+	    Get(k-1,j).Value(Get(k-1,j).Value()*2);
+	    Get(k,j)=Box();
+	    hasmove=true;
 	  }
 	}
       }
@@ -63,18 +55,10 @@ void Grid2048::Play(Input user){
 	    hasmove=true;
 	    swap(Get(i,j), Get(k,j));
 	  }
-	  if(k!=n-1){
-	    if(Get(k+1,j).Value()!=0 &&  Get(k+1,j).Value() == Get(k,j).Value()){
-	      Get(k+1,j).Value(Get(k+1,j).Value()*2);
-	      Get(k,j)=Box();
-	      hasmove=true;
-	    }
-	    if(Get(k+1,j).Type() == BoxType::CHARACTER
-	       || Get(k,j).Type() == BoxType::CHARACTER){
-	      Get(k+1,j)=Box();
-	      Get(k,j)=Box();
-	      hasmove=true;
-	    }
+	  if(k!=n-1 && Get(k+1,j).Value()!=0 &&  Get(k+1,j).Value() == Get(k,j).Value()){
+	    Get(k+1,j).Value(Get(k+1,j).Value()*2);
+	    Get(k,j)=Box();
+	    hasmove=true;
 	  }
 	}
       }
@@ -93,18 +77,10 @@ void Grid2048::Play(Input user){
 	    hasmove=true;
 	    swap(Get(i,j), Get(i,k));
 	  }
-	  if(k!=0){
-	    if(Get(i,k-1).Value()!=0 &&  Get(i,k-1).Value() == Get(i,k).Value()){
-	      Get(i,k-1).Value(Get(i,k-1).Value()*2);
-	      Get(i,k)=Box();
-	      hasmove=true;
-	    }
-	    if(Get(i,k-1).Type() == BoxType::CHARACTER
-	       || Get(i,k).Type() == BoxType::CHARACTER){
-	      Get(i,k-1)=Box();
-	      Get(i,k)=Box();
-	      hasmove=true;
-	    }
+	  if(k!=0 && Get(i,k-1).Value()!=0 &&  Get(i,k-1).Value() == Get(i,k).Value()){
+	    Get(i,k-1).Value(Get(i,k-1).Value()*2);
+	    Get(i,k)=Box();
+	    hasmove=true;
 	  }
 	}
       }
@@ -123,18 +99,10 @@ void Grid2048::Play(Input user){
 	    hasmove=true;
 	    swap(Get(i,j), Get(i,k));
 	  }
-	  if(k!=m-1){
-	    if(Get(i,k+1).Value() &&  Get(i,k+1).Value() == Get(i,k).Value()){
-	      Get(i,k+1).Value(Get(i,k+1).Value()*2);
-	      Get(i,k)=Box();
-	      hasmove=true;
-	    }
-	    if(Get(i,k+1).Type() == BoxType::CHARACTER
-	       || Get(i,k).Type() == BoxType::CHARACTER){
-	      Get(i,k+1)=Box();
-	      Get(i,k)=Box();
-	      hasmove=true;
-	    }
+	  if(k!=m-1 && Get(i,k+1).Value() &&  Get(i,k+1).Value() == Get(i,k).Value()){
+	    Get(i,k+1).Value(Get(i,k+1).Value()*2);
+	    Get(i,k)=Box();
+	    hasmove=true;
 	  }
 	}
       }
