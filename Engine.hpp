@@ -36,16 +36,15 @@ public:
 	  Print();
 	}
 	PrintGameOver();
-	if (human)
-	  while(true){
-		Input input = Player();
-		switch(input){
-		case Input::CLOSE:
-		  return;
-		default:
-		  ;
-		}
+	while(true){
+	  Input input = Player();
+	  switch(input){
+	  case Input::CLOSE:
+		return;
+	  default:
+		;
 	  }
+	}
   }
 
 protected:
