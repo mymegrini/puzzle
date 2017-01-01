@@ -12,6 +12,7 @@ using namespace std;
 #define MARGIN (BOX_SIZE/2)
 
 #define BLACK 0, 0, 0, 255
+#define GRAY 200, 200, 200, 255
 #define WHITE 255, 255, 255, 255
 
 Window::Window(int n, int m): n(n), m(m), width(BOX_SIZE*m+2*MARGIN),
@@ -96,6 +97,9 @@ void Window::RenderBox(Box b, int x, int y){
 
   switch(b.Type()){
   case BoxType::EMPTY :
+	SDL_SetRenderDrawColor(renderer, GRAY);
+	SDL_RenderDrawRect(renderer, &box);
+	SDL_SetRenderDrawColor(renderer, BLACK);
 	return;
   case BoxType::INT :
 	SDL_RenderDrawRect(renderer, &box);

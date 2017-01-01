@@ -2,8 +2,14 @@
 #define TEXTURE_H
 
 #include <SDL2/SDL.h>
+#ifndef OSX
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
+#else
+#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL2_image/SDL_image.h>
+#endif
+
 #include "Box.hpp"
 
 class Texture {
@@ -19,8 +25,8 @@ public:
 
 private:
   Box& box;
-  int width;
-  int height;
+  int width = 1;
+  int height = 1;
   SDL_Texture* text = NULL;
   static SDL_Renderer* renderer;
   static SDL_Texture* character;

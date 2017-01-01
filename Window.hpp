@@ -2,7 +2,6 @@
 #define WINDOW_H
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
 #include "Input.hpp"
 #include "Grid.hpp"
 
@@ -22,7 +21,6 @@ private:
   const int height;
   SDL_Window* window = NULL;
   SDL_Renderer* renderer = NULL;
-  TTF_Font *font = NULL;
   void RenderBox(Box b, int x, int y);
 };
 
