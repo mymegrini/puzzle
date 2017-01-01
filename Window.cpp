@@ -13,7 +13,7 @@ using namespace std;
 
 #define BLACK 0, 0, 0, 255
 #define GRAY 200, 200, 200, 255
-#define WHITE 255, 255, 255, 255
+#define WHITE 230, 230, 255, 255
 
 Window::Window(int n, int m): n(n), m(m), width(BOX_SIZE*m+2*MARGIN),
 							  height(BOX_SIZE*n+2*MARGIN){}
