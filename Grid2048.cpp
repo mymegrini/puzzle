@@ -157,10 +157,10 @@ void Grid2048::Newbox(){
   int nbemptybox=0;
   for(int i=0; i<m*n; ++i) if(array[i].Type()== BoxType::EMPTY) nbemptybox++;
     int r=rand()%nbemptybox;
-    int i=-1;
-    while(r>-1){
-      i++;
+    int i=0;
+    while(r>0){
       if(array[i].Type()== BoxType::EMPTY) r--;
+	  ++i;
     }
     int val;
     val=Rand();
