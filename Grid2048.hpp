@@ -6,7 +6,7 @@
 class Grid2048 : public Grid {
 
 public:
-  Grid2048(int i=4, int j=4):Grid(i,j){}
+  Grid2048(int i=4, int j=4):Grid(i,j,"2048"){}
   virtual void Init() override;
   virtual void Start() override;
   virtual void Print() override;

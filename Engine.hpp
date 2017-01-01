@@ -35,18 +35,21 @@ public:
 	  }
 	  Print();
 	}
-	while(true){
-	  Input input = Player();
-	  switch(input){
-	  case Input::CLOSE:
-		return;
-	  default:
-		;
+	PrintGameOver();
+	if (human)
+	  while(true){
+		Input input = Player();
+		switch(input){
+		case Input::CLOSE:
+		  return;
+		default:
+		  ;
+		}
 	  }
-	}
   }
 
 protected:
+  virtual void PrintGameOver(){ cout << "Game over." << endl; }
   virtual void Print(){ g.Print(); }
   virtual void Init(){
 	g.Init();
