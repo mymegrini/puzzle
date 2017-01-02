@@ -106,9 +106,11 @@ void Window::RenderBox(Box b, int x, int y){
 
   switch(b.Type()){
   case BoxType::EMPTY :
-	SDL_SetRenderDrawColor(renderer, GRAY);
-	SDL_RenderDrawRect(renderer, &box);
-	SDL_SetRenderDrawColor(renderer, BLACK);
+	if(b.Value() != 1){
+	  SDL_SetRenderDrawColor(renderer, GRAY);
+	  SDL_RenderDrawRect(renderer, &box);
+	  SDL_SetRenderDrawColor(renderer, BLACK);
+	}
 	return;
   case BoxType::INT :
 	if (b.Value() == -1){
@@ -137,13 +139,14 @@ Window::~Window(){
   //Free static textures
   Texture::Free();
 
+  //Shut down SDL_ttf
+  TTF_Quit();
+
   //Destroy renderer
   SDL_DestroyRenderer( renderer );
-  renderer = NULL;
 
   //Destroy window
   SDL_DestroyWindow( window );
-  window = NULL;
 
   //Quit SDL subsystems
   SDL_Quit();

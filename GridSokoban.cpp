@@ -9,12 +9,12 @@ using namespace std;
 
 void GridSokoban::Init(){
   int nbwall=rand()%((m*n)/4);
-  int nbhole=rand()%((m*n)/6)+1;
+  int nbhole=rand()%((m*n)/4)+1;
   for (int i=0; i<m*n-1; ++i){
     if(i<nbwall) array[i]=Box(BoxType::WALL,0);
     else if(i<nbwall+nbhole) array[i]=Box(BoxType::HOLE,0);
     else if(i<nbwall+nbhole*2) array[i]=Box(BoxType::BOX,0);
-    else array[i]=Box(BoxType::EMPTY,0);
+    else array[i]=Box(BoxType::EMPTY,1);
   }
   array[m*n-1]=Box(BoxType::CHARACTER,0);
 }
@@ -43,10 +43,12 @@ void GridSokoban::Print(){
       else if(b.Type() == BoxType::BOX)
 	cout << "|" << " ## " << "|";
       else if(b.Type() == BoxType::HOLE){
-		if(b.Value() == 0)
-		  cout << "|" << "(  )" << "|";
-		else
+		if(b.Value() == 1)
 		  cout << "|" << "(##)" << "|";
+		else if (b.Value() == 2)
+		  cout << "|" << "<00>" << "|";
+		else
+		  cout << "|" << "(  )" << "|";
 	  }
       else if(b.Type() == BoxType::WALL)
 	cout << "|" << "||||" << "|";
@@ -61,103 +63,121 @@ void GridSokoban::Print(){
   cout << endl;
 }
 
+void GridSokoban::Shift(int i, int j, bool test1, bool test2,
+						int i1, int j1, int i2, int j2, int cd){
+
+  if (Get(i,j).Type() == BoxType::CHARACTER) {
+	if(test1){
+	  if(Get(i+i1,j+j1).Type() == BoxType::EMPTY){
+		swap(Get(i+i1,j+j1), Get(i,j));
+		character+=cd;
+	  }
+	  else if(Get(i+i1,j+j1).Type() == BoxType::BOX){
+		if(test2){
+		  if(Get(i+i2,j+j2).Type() == BoxType::EMPTY){
+			swap(Get(i+i2,j+j2),Get(i+i1,j+j1));
+			swap(Get(i+i1,j+j1),Get(i,j));
+			character+=cd;
+		  }
+		  else if(Get(i+i2,j+j2).Type() == BoxType::HOLE
+				  && Get(i+i2,j+j2).Value()==0){
+			Get(i,j) = Box(BoxType::EMPTY, 1);
+			Get(i+i1,j+j1) = Box(BoxType::CHARACTER,0);
+			Get(i+i2,j+j2).Value(1);
+			character+=cd;
+		  }
+		}
+	  }
+	  else if(Get(i+i1,j+j1).Type() == BoxType::HOLE){
+		if (Get(i+i1,j+j1).Value() == 0) {
+		  Get(i,j) = Box(BoxType::EMPTY, 1);
+		  Get(i+i1,j+j1).Value(2);
+		  character+=cd;
+		}
+		else if (Get(i+i1,j+j1).Value() == 1 && test2){
+		  if (Get(i+i2,j+j2).Type() == BoxType::EMPTY){
+			Get(i+i2,j+j2) = Box(BoxType::BOX, 0);
+			Get(i,j) = Box(BoxType::EMPTY, 1);
+			Get(i+i1,j+j1).Value(2);
+			character+=cd;
+		  }
+		  else if(Get(i+i2,j+j2).Type() == BoxType::HOLE
+				  && Get(i+i2,j+j2).Value() == 0){
+			Get(i+i2,j+j2).Value(1);
+			Get(i,j) = Box(BoxType::EMPTY, 1);
+			Get(i+i1,j+j1).Value(2);
+			character+=cd;
+		  }
+		}
+	  }
+	}
+  }
+  else if(Get(i,j).Type() == BoxType::HOLE) {
+	if(test1){
+	  if(Get(i+i1,j+j1).Type() == BoxType::EMPTY){
+		Get(i,j).Value(0);
+		Get(i+i1,j+j1) = Box(BoxType::CHARACTER,0);
+		character+=cd;
+	  }
+	  else if(Get(i+i1,j+j1).Type() == BoxType::BOX){
+		if(test2){
+		  if(Get(i+i2,j+j2).Type() == BoxType::EMPTY){
+			Get(i,j).Value(0);
+			Get(i+i1,j+j1) = Box(BoxType::CHARACTER,0);
+			Get(i+i2,j+j2) = Box(BoxType::BOX,0);
+			character+=cd;
+		  }
+		  else if(Get(i+i2,j+j2).Type() == BoxType::HOLE
+				  && Get(i+i2,j+j2).Value()==0){
+			Get(i,j).Value(0);
+			Get(i+i1,j+j1) = Box(BoxType::CHARACTER,0);
+			Get(i+i2,j+j2).Value(1);
+			character+=cd;
+		  }
+		}
+	  }
+	  else if(Get(i+i1,j+j1).Type() == BoxType::HOLE){
+		if (Get(i+i1,j+j1).Value() == 0) {
+		  Get(i,j).Value(0);
+		  Get(i+i1,j+j1).Value(2);
+		  character+=cd;
+		}
+		else if (Get(i+i1,j+j1).Value() == 1 && test2){
+		  if (Get(i+i2,j+j2).Type() == BoxType::EMPTY){
+			Get(i+i2,j+j2) = Box(BoxType::BOX, 0);
+			Get(i,j).Value(0);
+			Get(i+i1,j+j1).Value(2);
+			character+=cd;
+		  }
+		  else if(Get(i+i2,j+j2).Type() == BoxType::HOLE
+				  && Get(i+i2,j+j2).Value() == 0){
+			Get(i+i2,j+j2).Value(1);
+			Get(i,j).Value(0);
+			Get(i+i1,j+j1).Value(2);
+			character+=cd;
+		  }
+		}
+	  }
+	}
+  }
+  return;
+}
+
 void GridSokoban::Play(Input user){
   int i = character/m;
   int j = character - i*m;
   switch(user){
   case Input::UP :
-    if(i!=0){
-      if(Get(i-1,j).Type() == BoxType::EMPTY){
-	swap(Get(i,j), Get(i-1,j));
-	character-=m;
-      }
-      else {
-	if(Get(i-1,j).Type() == BoxType::BOX){
-	  if(i-1>0){
-	    if(Get(i-2,j).Type() == BoxType::EMPTY){
-	      swap(Get(i,j), Get(i-1,j));
-	      swap(Get(i,j), Get(i-2,j));
-	      character-=m;
-	    }
-	    else if(Get(i-2,j).Type() == BoxType::HOLE && Get(i-2,j).Value()==0){
-	      Get(i-1,j)=Box();
-	      swap(Get(i,j), Get(i-1,j));
-	      Get(i-2,j).Value(1);
-	      character-=m;
-	    }
-	  }
-	}
-      }
-    }
-    break;
+	Shift(i,j, i>0,i-1>0, -1,0, -2,0, -m);
+	break;
   case Input::DOWN :
-    if(i!=m-1){
-      if(Get(i+1,j).Type() == BoxType::EMPTY){
-	swap(Get(i,j), Get(i+1,j));
-	character+=m;
-      }
-      else if(Get(i+1,j).Type() == BoxType::BOX){
-	if(i+2<m){
-	  if(Get(i+2,j).Type() == BoxType::EMPTY){
-	    swap(Get(i,j), Get(i+1,j));
-	    swap(Get(i,j), Get(i+2,j));
-	    character+=m;
-	  }
-	  else if(Get(i+2,j).Type() == BoxType::HOLE && Get(i+2,j).Value()==0){
-	    Get(i+1,j)=Box();
-	    swap(Get(i,j), Get(i+1,j));
-	    Get(i+2,j).Value(1);
-	    character+=m;
-	  }
-	}
-      }
-    }
+	Shift(i,j, i<m-1,i-1<m-1, 1,0, 2,0, m);
     break;
   case Input::LEFT :
-    if(j!=0){
-      if(Get(i,j-1).Type() == BoxType::EMPTY){
-	swap(Get(i,j), Get(i,j-1));
-	character--;
-      }
-      else if(Get(i,j-1).Type() == BoxType::BOX){
-	if(j-1>0){
-	  if(Get(i,j-2).Type() == BoxType::EMPTY){
-	    swap(Get(i,j), Get(i,j-1));
-	    swap(Get(i,j), Get(i,j-2));
-	    character--;
-	  }
-	  else if(Get(i,j-2).Type() == BoxType::HOLE && Get(i,j-2).Value()==0){
-	    Get(i,j-1)=Box();
-	    swap(Get(i,j), Get(i,j-1));
-	    Get(i,j-2).Value(1);
-	    character--;
-	  }
-	}
-      }
-    }
+	Shift(i,j, j>0, j-1>0, 0,-1, 0,-2, -1);
     break;
   case Input::RIGHT :
-    if(j!=n-1){
-      if(Get(i,j+1).Type() == BoxType::EMPTY){
-	swap(Get(i,j), Get(i,j+1));
-	character++;
-      }
-      else if(Get(i,j+1).Type() == BoxType::BOX){
-	if(j+2<n){
-	  if(Get(i,j+2).Type() == BoxType::EMPTY){
-	    swap(Get(i,j), Get(i,j+1));
-	    swap(Get(i,j), Get(i,j+2));
-	    character++;
-	  }
-	  else if(Get(i,j+2).Type() == BoxType::HOLE && Get(i,j+2).Value()==0){
-	    Get(i,j+1)=Box();
-	    swap(Get(i,j), Get(i,j+1));
-	    Get(i,j+2).Value(1);
-	    character++;
-	  }
-	}
-      }
-    }
+	Shift(i,j, j<n-1, j+1<n-1, 0,1, 0,2, 1);
     break;
   default:
     ;
@@ -166,7 +186,7 @@ void GridSokoban::Play(Input user){
 
 bool GridSokoban::GameOver(){
   for (int i=0; i<m*n; ++i)
-    if (array[i].Type() == BoxType::HOLE && array[i].Value()==0)
+    if (array[i].Type() == BoxType::HOLE && array[i].Value()!=1)
       return false;
   return true;
 }

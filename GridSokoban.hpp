@@ -6,7 +6,7 @@
 class GridSokoban : public Grid {
 
 public:
-  GridSokoban(int i=4, int j=4, const char* name = "Sokoban"):Grid(i,j,name){}
+  GridSokoban(int i=10, int j=10, const char* name = "Sokoban"):Grid(i,j,name){}
   virtual void Init() override;
   virtual void Start() override;
   virtual void Print() override;
@@ -16,6 +16,7 @@ public:
 
 private :
   int character=0; //location of the character
+  void Shift(int, int, bool, bool, int, int, int, int, int); 
 };
 
 #endif

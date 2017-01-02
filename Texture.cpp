@@ -9,6 +9,7 @@ SDL_Texture* Texture::character = NULL;
 SDL_Texture* Texture::crate = NULL;
 SDL_Texture* Texture::hole = NULL;
 SDL_Texture* Texture::filledhole = NULL;
+SDL_Texture* Texture::characteroverhole = NULL;
 SDL_Texture* Texture::wall = NULL;
 TTF_Font* Texture::font = NULL;
 SDL_Color Texture::black = {0,0,0};
@@ -49,6 +50,7 @@ void Texture::Init(SDL_Renderer* r){
   LoadImage("assets/front.png", &character);
   LoadImage("assets/key_yellow.png", &crate);
   LoadImage("assets/lock_yellow.png", &hole);
+  LoadImage("assets/front_on_lock_yellow.png", &characteroverhole);
 }
 
 void Texture::LoadImage(const char* path, SDL_Texture** target){
@@ -68,19 +70,13 @@ void Texture::LoadImage(const char* path, SDL_Texture** target){
 
 void Texture::Free(){
 
-  renderer = NULL;
   SDL_DestroyTexture(character);
-  character = NULL;
   SDL_DestroyTexture(crate);
-  crate = NULL;
   SDL_DestroyTexture(hole);
-  hole = NULL;
   SDL_DestroyTexture(filledhole);
-  filledhole = NULL;
+  SDL_DestroyTexture(characteroverhole);
   SDL_DestroyTexture(wall);
-  wall = NULL;
   TTF_CloseFont(font);
-  font = NULL;
 }
   
 void Texture::RenderFit(int w, int h, SDL_Point* center){
@@ -102,7 +98,16 @@ void Texture::RenderFit(int w, int h, SDL_Point* center){
 	texture = crate;
 	break;
   case BoxType::HOLE:
-	texture = (box.Value()==0?hole:filledhole);
+	switch(box.Value()){
+	case 1 :
+	  texture = filledhole;
+	  break;
+	case 2 :
+	  texture = characteroverhole;
+	  break;
+	default :
+	  texture = hole;
+	}
 	break;
   case BoxType::WALL:
 	texture = wall;

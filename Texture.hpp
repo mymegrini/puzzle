@@ -34,6 +34,7 @@ private:
   static SDL_Texture* hole;
   static SDL_Texture* filledhole;
   static SDL_Texture* wall;
+  static SDL_Texture* characteroverhole;
   static TTF_Font* font;
   static SDL_Color black;
   static SDL_Color white;

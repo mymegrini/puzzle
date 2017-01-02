@@ -56,11 +56,11 @@ int main(int argc, char* argv[]){
       e.Run();
     }
     else if (game == "2048D"){
-      Engine<Grid2048D> e(n,m,human);
+      EngineSDL<Grid2048D> e(n,m,human);
       e.Run();
     }
     else if (game == "2035"){
-      Engine<Grid2035> e(n,m,human);
+      EngineSDL<Grid2035> e(n,m,human);
       e.Run();
     }
     else if (game == "sokoban"){
