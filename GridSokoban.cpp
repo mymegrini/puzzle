@@ -69,20 +69,20 @@ void GridSokoban::Play(Input user){
       }
       else {
 	if(Get(i-1,j).Type() == BoxType::BOX){
-	if(i-1>0){
-	  if(Get(i-2,j).Type() == BoxType::EMPTY){
-	    swap(Get(i,j), Get(i-1,j));
-	    swap(Get(i,j), Get(i-2,j));
-	    character-=m;
-	  }
-	  else if(Get(i-2,j).Type() == BoxType::HOLE && Get(i-2,j).Value()==0){
-	    Get(i-1,j)=Box();
-	    swap(Get(i,j), Get(i-1,j));
-	    Get(i-2,j).Value(1);
-	    character-=m;
+	  if(i-1>0){
+	    if(Get(i-2,j).Type() == BoxType::EMPTY){
+	      swap(Get(i,j), Get(i-1,j));
+	      swap(Get(i,j), Get(i-2,j));
+	      character-=m;
+	    }
+	    else if(Get(i-2,j).Type() == BoxType::HOLE && Get(i-2,j).Value()==0){
+	      Get(i-1,j)=Box();
+	      swap(Get(i,j), Get(i-1,j));
+	      Get(i-2,j).Value(1);
+	      character-=m;
+	    }
 	  }
 	}
-      }
       }
     }
     break;

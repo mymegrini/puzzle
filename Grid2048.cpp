@@ -33,7 +33,7 @@ void Grid2048::Play(Input user){
 	    hasmove=true;
 	    swap(Get(i,j), Get(k,j));
 	  }
-	  if(k!=0 && Get(k-1,j).Value()!=0 && Get(k-1,j).Value() == Get(k,j).Value()){
+	  if(k!=0 && Get(k-1,j).Value() == Get(k,j).Value()){
 	    Get(k-1,j).Value(Get(k-1,j).Value()*2);
 	    Get(k,j)=Box();
 	    hasmove=true;
@@ -55,7 +55,7 @@ void Grid2048::Play(Input user){
 	    hasmove=true;
 	    swap(Get(i,j), Get(k,j));
 	  }
-	  if(k!=n-1 && Get(k+1,j).Value()!=0 &&  Get(k+1,j).Value() == Get(k,j).Value()){
+	  if(k!=n-1 && Get(k+1,j).Value() == Get(k,j).Value()){
 	    Get(k+1,j).Value(Get(k+1,j).Value()*2);
 	    Get(k,j)=Box();
 	    hasmove=true;
@@ -65,8 +65,8 @@ void Grid2048::Play(Input user){
     }
     break;
   case Input::LEFT :
-    for(int i=0;i<n;++i){
-      for(int j=1;j<m;++j){
+    for(int j=1;j<m;++j){
+      for(int i=0;i<n;++i){
 	if(Get(i,j).Type() != BoxType::EMPTY){
 	  int k=j;
 	  while(Get(i,k-1).Type() == BoxType::EMPTY){
@@ -77,7 +77,7 @@ void Grid2048::Play(Input user){
 	    hasmove=true;
 	    swap(Get(i,j), Get(i,k));
 	  }
-	  if(k!=0 && Get(i,k-1).Value()!=0 &&  Get(i,k-1).Value() == Get(i,k).Value()){
+	  if(k!=0 && Get(i,k-1).Value() == Get(i,k).Value()){
 	    Get(i,k-1).Value(Get(i,k-1).Value()*2);
 	    Get(i,k)=Box();
 	    hasmove=true;
@@ -87,8 +87,8 @@ void Grid2048::Play(Input user){
     }
     break;
   case Input::RIGHT :
-    for(int i=0;i<n;++i){
-      for(int j=m-2;j>-1;--j){
+    for(int j=m-2;j>-1;--j){
+      for(int i=0;i<n;++i){
 	if(Get(i,j).Type() != BoxType::EMPTY){
 	  int k=j;
 	  while(Get(i,k+1).Type() == BoxType::EMPTY){
@@ -99,7 +99,7 @@ void Grid2048::Play(Input user){
 	    hasmove=true;
 	    swap(Get(i,j), Get(i,k));
 	  }
-	  if(k!=m-1 && Get(i,k+1).Value() &&  Get(i,k+1).Value() == Get(i,k).Value()){
+	  if(k!=m-1 && Get(i,k+1).Value() == Get(i,k).Value()){
 	    Get(i,k+1).Value(Get(i,k+1).Value()*2);
 	    Get(i,k)=Box();
 	    hasmove=true;
@@ -116,18 +116,17 @@ void Grid2048::Play(Input user){
 
 void Grid2048::Newbox(){
   int nbemptybox=0;
-  for(int i=0; i<m*n; ++i) if(array[i].Type()==BoxType::EMPTY) nbemptybox++;
+  for(int i=0; i<m*n;++i) if(array[i].Type()==BoxType::EMPTY) nbemptybox++;
   int r=rand()%nbemptybox;
-  int i=0;
+  int i=-1;
   while(r>0){
-    if(array[i].Type()== BoxType::EMPTY) r--;
-    ++i;
+    if(array[++i].Type() == BoxType::EMPTY) r--;
   }
   int val;
   val=Rand();
-  int p = i-((i%m)*m);
+  //int p = i-((i%m)*m);
   array[i]=Box(BoxType::INT,val);
-  cout << "coo new case " << i << " val " << val;
+  //cout << "coo new case " << i << " val " << val;
 }
 
 bool Grid2048::GameOver(){
