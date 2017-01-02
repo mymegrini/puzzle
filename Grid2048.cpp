@@ -118,39 +118,31 @@ void Grid2048::Newbox(){
   int nbemptybox=0;
   for(int i=0; i<m*n;++i) if(array[i].Type()==BoxType::EMPTY) nbemptybox++;
   int r=rand()%nbemptybox;
-  int i=-1;
-  while(r>0){
-    if(array[++i].Type() == BoxType::EMPTY) r--;
+  int i;
+  for (i=0; i<m*n; ++i){
+	if(array[i].Type()==BoxType::EMPTY)
+	  --r;
+	if (r<0)
+	  break;
   }
-  cout << "Case " << i << endl;
-  array[i]=Box(BoxType::INT,Rand());
+  //cout << "Case " << i << endl;
+  if (i<m*n && array[i].Type()==BoxType::EMPTY)
+	array[i]=Box(BoxType::INT,Rand());
 }
 
 bool Grid2048::GameOver(){
   for (int i=0; i<m*n; ++i)
     if (array[i].Type()== BoxType::EMPTY)
       return false;
-  for (int i=0; i<m; ++i)
-	for (int j=0; j<n; ++i){
-	  int k = i;
-	  while (k+1<m && Get(k+1,j).Type() == BoxType::EMPTY)
-		++k;
-	  if (k != i && Get(i,j).Value() == Get(k,j).Value())
+  for (int i=0; i<n; ++i)
+	for (int j=0; j<m; ++j){
+	  if (i+1<n && Get(i+1,j).Value() == Get(i,j).Value())
 		return false;
-	  k = i;
-	  while (k>0 && Get(k-1,j).Type() == BoxType::EMPTY)
-		--k;
-	  if (k != i && Get(i,j).Value() == Get(k,j).Value())
+	  if (i>0 && Get(i-1,j).Value() == Get(i,j).Value())
 		return false;
-	  k = j;
-	  while (k+1<n && Get(i,k+1).Type() == BoxType::EMPTY)
-		++k;
-	  if (k != j && Get(i,j).Value() == Get(i,k).Value())
+	  if (j+1<m && Get(i,j+1).Value() == Get(i,j).Value())
 		return false;
-	  k = i;
-	  while (k>0 && Get(i,k-1).Type() == BoxType::EMPTY)
-		--k;
-	  if (k != i && Get(i,j).Value() == Get(i,k).Value())
+	  if (j>0 && Get(i,j-1).Value() == Get(i,j).Value())
 		return false;
 	}
   return true;
