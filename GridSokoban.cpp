@@ -34,20 +34,24 @@ void GridSokoban::Print(){
   cout << endl;
   for (int i=0; i<n; ++i){
     for (int j=0; j<m; ++j)
-      cout << "*----*";
+	  cout << "*----*";
     cout << endl;
     for (int j=0; j<m; ++j){
       Box b = Get(i,j);
       if(b.Type() == BoxType::EMPTY)
 	cout << "|    |";
       else if(b.Type() == BoxType::BOX)
-	cout << "|" << setw(4) << "B" << "|";
-      else if(b.Type() == BoxType::HOLE)
-	cout << "|" << setw(4) << "H" << "|";
+	cout << "|" << " ## " << "|";
+      else if(b.Type() == BoxType::HOLE){
+		if(b.Value() == 0)
+		  cout << "|" << "(  )" << "|";
+		else
+		  cout << "|" << "(##)" << "|";
+	  }
       else if(b.Type() == BoxType::WALL)
-	cout << "|" << setw(4) << "W" << "|";
+	cout << "|" << "||||" << "|";
       else if(b.Type() == BoxType::CHARACTER)
-	cout << "|" << setw(4) << "C" << "|";
+	cout << "|" << setw(4) << "<00>" << "|";
     }
     cout << endl;
     for (int j=0; j<m; ++j)
