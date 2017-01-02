@@ -63,7 +63,10 @@ int main(int argc, char* argv[]){
       Engine<Grid2035> e(n,m,human);
       e.Run();
     }
-    else if (game == "sokoban"){}
+    else if (game == "sokoban"){
+	  EngineSDL<GridSokoban> e(n,m,human);
+	  e.Run();
+	}
   }
 
   return 0;
