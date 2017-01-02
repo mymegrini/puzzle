@@ -40,10 +40,6 @@ int main(int argc, char* argv[]){
       Engine<Grid2035> e(n,m,human);
       e.Run();
     }
-    else if (game == "2035D"){
-      Engine<Grid2035D> e(n,m,human);
-      e.Run();
-    }
     else if (game == "sokoban"){
       Engine<GridSokoban> e(n,m,human);
       e.Run();
