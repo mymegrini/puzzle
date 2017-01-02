@@ -53,7 +53,7 @@ Available options:\n\
       break;
     case 's': {
 	  string size = string(optarg);
-	  uint x = size.find('x');
+	  size_t x = size.find('x');
 	  if (x != string::npos){
 		n = stoi(size.substr(0, x));
 		m = stoi(size.substr(x+1));

@@ -2,8 +2,9 @@
 #define GRID2035D_H
 
 #include "Grid2048D.hpp"
+#include "Grid2035.hpp"
 
-class Grid2035D : public Grid2048D{
+class Grid2035D : public Grid2048D, public Grid2035{
 
 public:
   Grid2035D(int i=4, int j=4):Grid2048D(i,j,"2035D"){}

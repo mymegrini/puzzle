@@ -8,12 +8,7 @@
 using namespace std;
 
 int Grid2035D::Rand(){
-  int r =rand()%6;
-  if(rand()%8==0) return 0;
-  if(r==0) return 2;
-  if(r==1) return 4;
-  if(r==2) return 3;
-  if(r==3) return 6;
-  if(r==4) return 5;
-  return 10;
+   int r = Grid2048D::Rand();
+  if(r==0) return 0;
+  else return Grid2035::Rand();
 }
