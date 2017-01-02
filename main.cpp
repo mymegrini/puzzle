@@ -42,7 +42,7 @@ int main(int argc, char* argv[]){
       e.Run();
     }
     else if (game == "2035D"){
-      Engine<Grid2035> e(n,m,human);
+      Engine<Grid2035D> e(n,m,human);
       e.Run();
     }
     else if (game == "sokoban"){
@@ -69,7 +69,7 @@ int main(int argc, char* argv[]){
       e.Run();
     }
     else if (game == "2035D"){
-      EngineSDL<Grid2035> e(n,m,human);
+      EngineSDL<Grid2035D> e(n,m,human);
       e.Run();
     }
     else if (game == "sokoban"){
