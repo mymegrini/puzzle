@@ -171,7 +171,7 @@ void GridSokoban::Play(Input user){
 	Shift(i,j, i>0,i-1>0, -1,0, -2,0, -m);
 	break;
   case Input::DOWN :
-	Shift(i,j, i<m-1,i-1<m-1, 1,0, 2,0, m);
+	Shift(i,j, i<m-1,i+1<m-1, 1,0, 2,0, m);
     break;
   case Input::LEFT :
 	Shift(i,j, j>0, j-1>0, 0,-1, 0,-2, -1);
