@@ -132,18 +132,11 @@ void Grid2048D::Play(Input user){
   if(hasmove) Newbox();
 }
 
-void Grid2048D::Newbox(){
-  int nbemptybox=0;
-  for(int i=0; i<m*n; ++i) if(array[i].Type()== BoxType::EMPTY) nbemptybox++;
-  int r=rand()%nbemptybox;
-  int i=-1;
-  while(r!=0){
-    i++;
-    if(array[i].Type()== BoxType::EMPTY) r--;
-  }
-  int val;
-  val=Rand();
+int Grid2048D::Rand(){
   int k=rand()%6;
-  if(k==0) val=0;
-  array[i]=Box(BoxType::INT,val);
+  if(k==0) return 0;
+  if(rand()%2 == 0) return 2;
+  return 4;
 }
+
+
