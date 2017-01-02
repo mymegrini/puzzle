@@ -28,8 +28,9 @@ void Grid2048D::Play(Input user){
 	    Get(k,j)=Box();
 	    hasmove=true;
 	  }
-	  if((Get(k-1,j).Type() == BoxType::INT && Get(k-1,j).Value()==0) ||
-	     (Get(k,j).Type() == BoxType::INT && Get(k,j).Value()==0)){
+	  if(k!=0 &&
+	     ((Get(k-1,j).Type() == BoxType::INT && Get(k-1,j).Value()==0) ||
+	      (Get(k,j).Type() == BoxType::INT && Get(k,j).Value()==0))){
 	    Get(k-1,j)=Box();
 	    Get(k,j)=Box();
 	    hasmove=true;
@@ -56,8 +57,9 @@ void Grid2048D::Play(Input user){
 	    Get(k,j)=Box();
 	    hasmove=true;
 	  }
-	  if((Get(k+1,j).Type() == BoxType::INT && Get(k+1,j).Value()==0) ||
-	     (Get(k,j).Type() == BoxType::INT && Get(k,j).Value()==0)){
+	  if(k!=n-1 &&
+	     ((Get(k+1,j).Type() == BoxType::INT && Get(k+1,j).Value()==0) ||
+	     (Get(k,j).Type() == BoxType::INT && Get(k,j).Value()==0))){
 	    Get(k+1,j)=Box();
 	    Get(k,j)=Box();
 	    hasmove=true;
@@ -84,8 +86,9 @@ void Grid2048D::Play(Input user){
 	    Get(i,k)=Box();
 	    hasmove=true;
 	  }
-	  if((Get(i,k-1).Type() == BoxType::INT && Get(i,k-1).Value()==0) ||
-	     (Get(i,k).Type() == BoxType::INT && Get(i,k).Value()==0)){
+	  if(k!=0 &&
+	     ((Get(i,k-1).Type() == BoxType::INT && Get(i,k-1).Value()==0) ||
+	      (Get(i,k).Type() == BoxType::INT && Get(i,k).Value()==0))){
 	    Get(i,k-1)=Box();
 	    Get(i,k)=Box();
 	    hasmove=true;
@@ -112,8 +115,9 @@ void Grid2048D::Play(Input user){
 	    Get(i,k)=Box();
 	    hasmove=true;
 	  }
-	  if((Get(i,k+1).Type() == BoxType::INT && Get(i,k+1).Value()==0) ||
-	     (Get(i,k).Type() == BoxType::INT && Get(i,k).Value()==0)){
+	  if(k!=m-1 &&
+	     ((Get(i,k+1).Type() == BoxType::INT && Get(i,k+1).Value()==0) ||
+	      (Get(i,k).Type() == BoxType::INT && Get(i,k).Value()==0))){
 	    Get(i,k+1)=Box();
 	    Get(i,k)=Box();
 	    hasmove=true;

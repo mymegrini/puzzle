@@ -122,6 +122,7 @@ void Grid2048::Newbox(){
   while(r>0){
     if(array[++i].Type() == BoxType::EMPTY) r--;
   }
+  cout << "Case " << i << endl;
   array[i]=Box(BoxType::INT,Rand());
 }
 
