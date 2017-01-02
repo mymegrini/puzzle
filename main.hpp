@@ -71,7 +71,7 @@ Available options:\n\
   
   if (optind >= argc){
     cerr << "No game specified." << endl << "Available games: "
-		 << "taquin, 2048, 2048D, 2035, sokoban" << endl;
+		 << "taquin, 2048, 2048D, 2035, 2035D, sokoban" << endl;
 	usage(cerr);
 	exit(1);
   } else

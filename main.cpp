@@ -4,6 +4,7 @@
 #include "GridTaquin.hpp"
 #include "Grid2048.hpp"
 #include "Grid2035.hpp"
+#include "Grid2035D.hpp"
 #include "Grid2048D.hpp"
 #include "GridSokoban.hpp"
 #include "Engine.hpp"
@@ -40,6 +41,10 @@ int main(int argc, char* argv[]){
       Engine<Grid2035> e(n,m,human);
       e.Run();
     }
+    else if (game == "2035D"){
+      Engine<Grid2035> e(n,m,human);
+      e.Run();
+    }
     else if (game == "sokoban"){
       Engine<GridSokoban> e(n,m,human);
       e.Run();
@@ -60,6 +65,10 @@ int main(int argc, char* argv[]){
       e.Run();
     }
     else if (game == "2035"){
+      EngineSDL<Grid2035> e(n,m,human);
+      e.Run();
+    }
+    else if (game == "2035D"){
       EngineSDL<Grid2035> e(n,m,human);
       e.Run();
     }
