@@ -18,7 +18,7 @@ public:
   virtual bool GameOver() = 0; // Returns true if game is over
   int N() { return n; }
   int M() { return m; }
-  ~Grid(){
+  virtual ~Grid(){
 	if (array != nullptr)
 	  delete[] array;
   }

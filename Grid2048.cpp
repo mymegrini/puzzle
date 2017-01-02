@@ -133,6 +133,29 @@ bool Grid2048::GameOver(){
   for (int i=0; i<m*n; ++i)
     if (array[i].Type()== BoxType::EMPTY)
       return false;
+  for (int i=0; i<m; ++i)
+	for (int j=0; j<n; ++i){
+	  int k = i;
+	  while (k+1<m && Get(k+1,j).Type() == BoxType::EMPTY)
+		++k;
+	  if (k != i && Get(i,j).Value() == Get(k,j).Value())
+		return false;
+	  k = i;
+	  while (k>0 && Get(k-1,j).Type() == BoxType::EMPTY)
+		--k;
+	  if (k != i && Get(i,j).Value() == Get(k,j).Value())
+		return false;
+	  k = j;
+	  while (k+1<n && Get(i,k+1).Type() == BoxType::EMPTY)
+		++k;
+	  if (k != j && Get(i,j).Value() == Get(i,k).Value())
+		return false;
+	  k = i;
+	  while (k>0 && Get(i,k-1).Type() == BoxType::EMPTY)
+		--k;
+	  if (k != i && Get(i,j).Value() == Get(i,k).Value())
+		return false;
+	}
   return true;
 }
 
