@@ -5,6 +5,7 @@
 #include "Grid2048.hpp"
 #include "Grid2035.hpp"
 #include "Grid2048D.hpp"
+#include "GridSokoban.hpp"
 #include "Engine.hpp"
 
 #include "EngineSDL.hpp"
@@ -12,7 +13,6 @@
 using namespace std;
 
 int main(int argc, char* argv[]){
-
   int n = 0;
   int m = 0;
   bool text = false; //text-mode
@@ -40,7 +40,10 @@ int main(int argc, char* argv[]){
       Engine<Grid2035> e(n,m,human);
       e.Run();
     }
-    else if (game == "sokoban"){}
+    else if (game == "sokoban"){
+      Engine<GridSokoban> e(n,m,human);
+      e.Run();
+    }
   }
   else {
 
