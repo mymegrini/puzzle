@@ -15,8 +15,8 @@ using namespace std;
 #define GRAY 200, 200, 200, 200
 #define WHITE 240, 240, 255, 255
 
-Window::Window(int n, int m): n(n), m(m), width(BOX_SIZE*m+2*MARGIN),
-							  height(BOX_SIZE*n+2*MARGIN){}
+Window::Window(int n, int m): n(n), m(m), width(BOX_SIZE*m+2*MARGIN-BOX_BORDER),
+							  height(BOX_SIZE*n+2*MARGIN-BOX_BORDER){}
 
 void Window::Init(const char* title) {
 
@@ -89,6 +89,12 @@ void Window::Render(Grid& g){
 
   SDL_SetRenderDrawColor(renderer, WHITE);
   SDL_RenderClear(renderer);
+  if (string(g.Name) == string("Sokoban")){
+	SDL_SetRenderDrawColor(renderer, GRAY);
+	SDL_Rect border = {MARGIN-BOX_BORDER, MARGIN-BOX_BORDER,
+					   g.N()*BOX_SIZE, g.M()*BOX_SIZE};
+	SDL_RenderDrawRect(renderer, &border);
+  }
   SDL_SetRenderDrawColor(renderer, BLACK);
   for (int i=0; i<n; ++i)
 	for(int j=0; j<m; ++j)
@@ -113,7 +119,7 @@ void Window::RenderBox(Box b, int x, int y){
 	}
 	return;
   case BoxType::INT :
-	if (b.Value() == -1){
+	if (b.Value() == 0){
 	  SDL_RenderFillRect(renderer, &box);
 	  return;
 	} else {
