@@ -122,11 +122,7 @@ void Grid2048::Newbox(){
   while(r>0){
     if(array[++i].Type() == BoxType::EMPTY) r--;
   }
-  int val;
-  val=Rand();
-  //int p = i-((i%m)*m);
-  array[i]=Box(BoxType::INT,val);
-  //cout << "coo new case " << i << " val " << val;
+  array[i]=Box(BoxType::INT,Rand());
 }
 
 bool Grid2048::GameOver(){
